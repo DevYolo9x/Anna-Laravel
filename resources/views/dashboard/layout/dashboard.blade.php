@@ -36,6 +36,24 @@
         .no-print {
             top: 50% !important;
         }
+        .side-nav .side-nav__header a:first-child {
+            /* padding-left: 20px; */
+            transition: 0.4s;
+        }
+        .side-nav.side-nav--simple .side-nav__header a:first-child {
+            padding-left: 0;
+            transition: 0.4s;
+        }
+        .side-nav.side-nav--simple .side-nav__header a:first-child span {
+            display: none;
+        }
+        nav.side-nav.side-nav--simple .top-title-seo {
+            background: #0e2465;
+        }
+        .side-nav.side-nav--simple:hover .side-nav__header a:first-child {
+            padding-left: 20px;
+            transition: 0.4s;
+        }
     </style>
 </body>
 

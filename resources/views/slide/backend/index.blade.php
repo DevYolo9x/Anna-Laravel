@@ -17,7 +17,7 @@
                             <a href="javascript:void(0);" data-tw-toggle="modal" data-tw-target="#basic-modal-upload-image" class="btn btn-primary btn-block btn-upload w-full">Upload hình ảnh</a>
                             <div class="hr-line-dashed"></div>
                             <div class="flex items-center justify-between">
-                                <h5 style="font-size:20px">Nhóm Slide</h5>
+                                <h5>Nhóm Slide</h5>
                                 @if(env('APP_ENV') == "local")
                                 <a href="javascript:void(0);" data-tw-toggle="modal" data-tw-target="#basic-modal-add-group">+ Thêm mới</a>
                                 @endif

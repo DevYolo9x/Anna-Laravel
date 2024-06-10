@@ -5,9 +5,6 @@ $menu_top = getMenus('menu-top');
 <div class="custom-cursor__cursor"></div>
 <div class="custom-cursor__cursor-two"></div>
 
-
-
-
 <div class="preloader">
     <div class="preloader__image"></div>
 </div>
@@ -28,7 +25,7 @@ $menu_top = getMenus('menu-top');
                                 <span class="icon-telephone-call"></span>
                             </i>
                             <div class="text">
-                                <p><a href="tel:008757845682">(00) 875 784 5682</a></p>
+                                <p><a href="tel:{{ $fcSystem['contact_hotline'] }}">{{ $fcSystem['contact_hotline'] }}</a></p>
                             </div>
                         </li>
                         <li>
@@ -36,7 +33,7 @@ $menu_top = getMenus('menu-top');
                                 <span class="fas fa-envelope"></span>
                             </i>
                             <div class="text">
-                                <p><a href="mailto:Insurinfo@gmail.com">Insurinfo@gmail.com</a></p>
+                                <p><a href="mailto:{{ $fcSystem['contact_email'] }}">{{ $fcSystem['contact_email'] }}</a></p>
                             </div>
                         </li>
                         <li>
@@ -44,7 +41,7 @@ $menu_top = getMenus('menu-top');
                                 <span class="icon-pin"></span>
                             </i>
                             <div class="text">
-                                <p>238, Arimantab, Moska - USA.</p>
+                                <p>{{ $fcSystem['contact_address'] }}</p>
                             </div>
                         </li>
                     </ul>
@@ -81,9 +78,8 @@ $menu_top = getMenus('menu-top');
                 <div class="main-menu-six__wrapper-inner">
                     <div class="main-menu-six__logo-box">
                         <div class="main-menu-six__logo">
-                            <a href="index.html"><img
-                                    src="http://html2020.tamphat.edu.vn/insur-html/assets/images/update-17-06-2023/resources/main-menu-six-logo.png"
-                                    alt=""></a>
+                            <a href="index.html">
+                                <img src="http://html2020.tamphat.edu.vn/insur-html/assets/images/update-17-06-2023/resources/main-menu-six-logo.png" alt=""></a>
                         </div>
                     </div>
                     <div class="main-menu-six__left">

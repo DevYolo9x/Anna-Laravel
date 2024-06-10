@@ -1,8 +1,8 @@
 <?php $dropdown = getFunctions(); //dd($dropdown); ?>
 <nav class="side-nav">
-    <div class="pt-4 mb-4">
+    <div class="py-4 top-title-seo">
         <div class="side-nav__header flex items-center">
-            <a href="{{route('admin.dashboard')}}" class=" flex items-center">
+            <a href="{{route('admin.dashboard')}}" class=" flex items-center pl-5">
                 <img alt="Rocketman Tailwind HTML Admin Template" class="side-nav__header__logo" src="{{asset('backend/images/logo.svg')}}">
                 <span class="side-nav__header__text text-white pt-0.5 text-lg ml-2.5"> {{env('BE_TITLE_SEO')}} </span>
             </a>
