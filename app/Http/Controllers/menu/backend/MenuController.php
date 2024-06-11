@@ -188,6 +188,7 @@ class MenuController extends Controller
             'slug' => $request->slug,
             'image' => $request->image,
             'target' => $request->target,
+            'isnew' => $request->isnew,
             'userid_updated' => Auth::user()->id,
             'updated_at' => Carbon::now(),
             'alanguage' => config('app.locale'),

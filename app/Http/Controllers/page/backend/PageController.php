@@ -81,8 +81,10 @@ class PageController extends Controller
             $arrID = array( 37, 40, 38, 35, 39);
             $order = implode(',', $arrID);
             $field = \App\Models\ConfigColum::where(['trash' => 0, 'publish' => 0, 'module' => $module])->whereIn('id', $arrID)->orderByRaw("FIELD(id, $order)")->get();
-        } else if ($detail->id == 46) {
-            $field = \App\Models\ConfigColum::where(['trash' => 0, 'publish' => 0, 'module' => $module])->where('id', 36)->get();
+        } else if ($detail->id == 68) {
+            $arrID = array( 49,50,51 );
+            $order = implode(',', $arrID);
+            $field = \App\Models\ConfigColum::where(['trash' => 0, 'publish' => 0, 'module' => $module])->whereIn('id', $arrID)->orderByRaw("FIELD(id, $order)")->get();
         } else if ($detail->id == 66) {
             $arrID = array( 41 );
             $order = implode(',', $arrID);

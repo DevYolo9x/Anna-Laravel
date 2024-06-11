@@ -22,14 +22,14 @@ class ContactController extends Controller
     public function index()
     {
         //page: Contact
-
-        $page = Page::where(['alanguage' => config('app.locale'), 'page' => 'contact'])->select('meta_title', 'meta_description', 'image', 'title', 'description')->first();
+        $page = Page::where(['alanguage' => config('app.locale'), 'page' => 'contact'])->select('id', 'meta_title', 'meta_description', 'image', 'title', 'description')->with('fields')->first();
+        $banner_breadcrum = showField($page->fields, 'config_colums_input_contact_banner');        
         $seo['canonical'] = url('/');
         $seo['meta_title'] = !empty($page['meta_title']) ? $page['meta_title'] : $page['title'];
         $seo['meta_description'] = !empty($page['meta_description']) ? $page['meta_description'] : '';
         $seo['meta_image'] = !empty($page['image']) ? url($page['image']) : '';
         $fcSystem = $this->system->fcSystem();
-        return view('contact.frontend.index', compact('fcSystem', 'seo', 'page'));
+        return view('contact.frontend.index', compact('fcSystem', 'seo', 'page', 'banner_breadcrum'));
     }
     public function store(Request $request)
     {
@@ -37,34 +37,23 @@ class ContactController extends Controller
             $validator = Validator::make($request->all(), [
                 'fullname' => 'required',
                 'email' => 'required|email',
-                 'phone' => ['required', new PhoneNumber],
-                // 'message' => 'required',
             ], [
                 'fullname.required' => 'Trường Họ và tên là trường bắt buộc.',
                 'email.required' => 'Email là trường bắt buộc.',
                 'email.email' => 'Email không đúng định dạng.',
-                 'phone.required' => 'Số điện thoại là trường bắt buộc.',
-                // 'phone.regex'        => 'Số điện thoại không hợp lệ.',
-                // 'phone.numeric' => 'Số điện thoại không đúng định dạng.',
-                // 'message.required' => 'Nội dung là trường bắt buộc.',
             ]);
         } else {
             $validator = Validator::make($request->all(), [
                 'fullname' => 'required',
                 'email' => 'required|email',
-                'phone' => 'required',
-                'message' => 'required',
             ]);
         }
         if ($validator->passes()) {
             $id = Contact::insertGetId([
-                'fullname' => $request->fullname,
-                'email' => $request->email,
-                'phone' => $request->phone,
-                'subject' => $request->subject,
-                // 'address' => $request->address,
-                'message' => $request->message,
                 'type' => 'contact',
+                'fullname' => $request->fullname,
+                'message' => $request->message,
+                'email' => $request->email,
                 'created_at' => Carbon::now()
             ]);
             if ($id > 0) {

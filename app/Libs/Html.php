@@ -102,32 +102,45 @@ if (!function_exists('getUrlHome')) {
 }
 /**HTML: Breadcrumb */
 if (!function_exists('htmlBreadcrumb')) {
-    function htmlBreadcrumb($title = '', $breadcrumb = [])
+    function htmlBreadcrumb($title = '', $breadcrumb = [], $banner = '')
     {
         $html = '';
-        $html .= '<div class="breadcrumb py-[10px] relative z-10 mt-[5px] bg-gray-100">
-        <div class="container mx-auto px-3">
-          <ul class="flex flex-wrap ">
-            <li class="text-black">
-              <a href="' . getUrlHome() . '" class="text-f15 text-black">Trang chủ</a>
-            </li>';
-        if (!empty($breadcrumb)) {
-            foreach ($breadcrumb as $item) {
-                $html .= '<li>
-                    <div class="flex items-center"><span class="mx-1">/</span><a href="' . route('routerURL', ['slug' => $item['slug']]) . '" class="text-sm font-medium text-gray-700 hover:text-blue-600 md:ml-2 dark:text-gray-400 dark:hover:text-white">' . $item['title'] . '&nbsp</a>
+        if( isset($breadcrumb) && is_array($breadcrumb) && count($breadcrumb) ) {
+            $html .= '<section class="page-header">
+                    <div class="page-header-bg" style="background-image: url('.$banner.')">
                     </div>
-                </li>';
-            }
+                    <div class="page-header-shape-1"><img src="'. asset('frontend.images.page-header-shape-1.png') .'" alt="shape"></div>
+                    <div class="container">
+                        <div class="page-header__inner">
+                            <ul class="thm-breadcrumb list-unstyled">
+                                <li><a href="'.url('/').'">'. trans('index.home') .'</a></li>';
+                                foreach( $breadcrumb as $k => $v ) {
+                                    $html .= '<li><span>/</span></li>
+                                                <li>'.$v['title'].'</li>';
+                                }
+                    $html .= '</ul>
+                            <h2>Contact</h2>
+                        </div>
+                    </div>
+                </section>';
         } else {
-            $html .= '<li>
-                    <div class="flex items-center">/<a href="javascript:void(0)" class="text-sm font-medium text-gray-700 hover:text-blue-600 md:ml-2 dark:text-gray-400 dark:hover:text-white">' . $title . '</a>
+            $html .= '<section class="page-header">
+                    <div class="page-header-bg" style="background-image: url('.$banner.')">
                     </div>
-                </li>';
+                    <div class="page-header-shape-1"><img src="'. asset('frontend.images.page-header-shape-1.png') .'" alt="shape"></div>
+                    <div class="container">
+                        <div class="page-header__inner">
+                            <ul class="thm-breadcrumb list-unstyled">
+                                <li><a href="'.url('/').'">'. trans('index.home') .'</a></li>
+                                <li><span>/</span></li>
+                                <li>'.$title.'</li>
+                            </ul>
+                            <h2>'.$title.'</h2>
+                        </div>
+                    </div>
+                </section>';
         }
-        $html .= '</ul>
-        </div>
-      </div>';
-
+        
         return $html;
     }
 }

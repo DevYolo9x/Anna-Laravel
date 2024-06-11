@@ -1,27 +1,31 @@
 @extends('homepage.layout.home')
 @section('content')
+
+    @if( $slideHome && $slideHome->slides )
     <!--Main Slider Start-->
     <section class="main-slider-six clearfix" id="home">
         <div class="swiper-container thm-swiper__slider"
             data-swiper-options='{"slidesPerView": 1, "loop": true,
-        "effect": "fade",
-        "pagination": {
-        "el": "#main-slider-pagination",
-        "type": "bullets",
-        "clickable": true
-        },
-        "navigation": {
-        "nextEl": "#main-slider__swiper-button-next",
-        "prevEl": "#main-slider__swiper-button-prev"
-        },
-        "autoplay": {
-        "delay": 5000
-        }}'>
+                "effect": "fade",
+                "pagination": {
+                "el": "#main-slider-pagination",
+                "type": "bullets",
+                "clickable": true
+                },
+                "navigation": {
+                "nextEl": "#main-slider__swiper-button-next",
+                "prevEl": "#main-slider__swiper-button-prev"
+                },
+                "autoplay": {
+                "delay": 5000
+                }}'>
             <div class="swiper-wrapper">
-
+                
+                @foreach( $slideHome->slides as $v )
                 <div class="swiper-slide">
                     <div class="image-layer"
-                        style="background-image: url(http://html2020.tamphat.edu.vn/insur-html/assets/images/update-17-06-2023/backgrounds/main-slider-6-1.jpg);">
+                        style="background-image: url({{ $v }});">
+                        style="background-image: url({{ asset($v->images) }});">
                     </div>
                     <!-- /.image-layer -->
 
@@ -44,58 +48,7 @@
                         </div>
                     </div>
                 </div>
-
-                <div class="swiper-slide">
-                    <div class="image-layer"
-                        style="background-image: url(assets/images/update-17-06-2023/backgrounds/main-slider-6-2.jpg);">
-                    </div>
-                    <!-- /.image-layer -->
-
-                    <div class="container">
-                        <div class="row">
-                            <div class="col-xl-12">
-                                <div class="main-slider-six__content">
-                                    <h2 class="main-slider-six__title">life insurance more <br> than just lifetime
-                                        <br> Protection
-                                    </h2>
-                                    <p class="main-slider-six__text">Lorem Ipsum has been the industry's standard
-                                        dummy text ever since unknown <br> printer took a galley of type and
-                                        scrambled it to make.</p>
-                                    <div class="main-slider-six__btn-box">
-                                        <a href="about.html" class="thm-btn-three main-slider-six__btn">Let’s Get
-                                            Started <span class="icon-right-arrow1"></span></a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="swiper-slide">
-                    <div class="image-layer"
-                        style="background-image: url(assets/images/update-17-06-2023/backgrounds/main-slider-6-3.jpg);">
-                    </div>
-                    <!-- /.image-layer -->
-
-                    <div class="container">
-                        <div class="row">
-                            <div class="col-xl-12">
-                                <div class="main-slider-six__content">
-                                    <h2 class="main-slider-six__title">life insurance more <br> than just lifetime
-                                        <br> Protection
-                                    </h2>
-                                    <p class="main-slider-six__text">Lorem Ipsum has been the industry's standard
-                                        dummy text ever since unknown <br> printer took a galley of type and
-                                        scrambled it to make.</p>
-                                    <div class="main-slider-six__btn-box">
-                                        <a href="about.html" class="thm-btn-three main-slider-six__btn">Let’s Get
-                                            Started <span class="icon-right-arrow1"></span></a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                @endforeach
 
             </div>
 
@@ -112,6 +65,7 @@
         </div>
     </section>
     <!--Main Slider End-->
+    @endif
 
     <!--Feature Six Start-->
     <section class="feature-six">

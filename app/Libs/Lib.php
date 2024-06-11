@@ -7,7 +7,7 @@ if (!function_exists('getMenus')) {
     {
         $data = Cache::remember($keyword, 600, function () use ($keyword) {
             $data = \App\Models\Menu::select('id', 'title')->where(['slug' => $keyword])->with(['menu_items' => function ($query) {
-                $query->select('menu_items.id', 'menu_items.menu_id', 'menu_items.parentid', 'menu_items.title', 'menu_items.image', 'menu_items.slug', 'menu_items.target')
+                $query->select('menu_items.id', 'menu_items.menu_id', 'menu_items.parentid', 'menu_items.title', 'menu_items.image', 'menu_items.slug', 'menu_items.target', 'menu_items.isnew')
                     ->where(['alanguage' => config('app.locale'), 'parentid' => 0])
                     ->with(['children' => function ($query) {
                         $query->select('menu_items.id', 'menu_items.menu_id', 'menu_items.parentid', 'menu_items.title', 'menu_items.image', 'menu_items.slug', 'menu_items.target')->where('alanguage', config('app.locale'))
@@ -20,6 +20,18 @@ if (!function_exists('getMenus')) {
         return $data;
     }
 }
+
+if (!function_exists('getSlide')) {
+
+    function getSlide($keyword = "")
+    {
+        $slide = Cache::remember('slide', 600, function () {
+            $slide = \App\Models\CategorySlide::select('title', 'id')->where(['alanguage' => config('app.locale'), 'keyword' => $keyword])->with('slides')->first();
+            return $slide;
+        });
+    }
+}
+
 if (!function_exists('getHtmlMenus')) {
     function getHtmlMenus($data = [], $arr = [])
     {

@@ -62,7 +62,6 @@
     </script>
     @endif
     @endif
-    @include('homepage.common.scrollUp')
     <?php echo $fcSystem['script_footer'] ?>
     @stack('javascript')
 

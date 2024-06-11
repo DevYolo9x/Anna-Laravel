@@ -34,6 +34,10 @@
                     <input type="checkbox" name="target" value="_blank" @if($item['target']=="_blank" ) checked @endif>
                     Mở sang tab mới
                 </div>
+                <div class="mt-3">
+                    <input type="checkbox" name="isnew" value="1" @if($item['isnew']==1 ) checked @endif>
+                    Mới (Trạng thái)
+                </div>
                 <div class="mt-3 flex items-center">
                     @can('menus_edit')
                     <button class="btn btn-sm btn-primary mr-2" type="submit">Cập nhập</button>

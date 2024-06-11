@@ -298,14 +298,6 @@ return [
                 'dropdown' => true,
                 'active' => true
             ],
-            'popup' => [
-                'title' => 'Danh sách đăng ký',
-                'can' => 'contacts_index',
-                'route' => 'contacts.popup',
-                'menu' => ['contacts'],
-                'dropdown' => false,
-                'active' => true
-            ],
             // 'subscribers' => [
             //     'title' => 'Đăng ký gửi email',
             //     'can' => 'contacts_index',

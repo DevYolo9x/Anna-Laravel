@@ -1,11 +1,12 @@
 <?php
 $menu_footer = getMenus('menu-footer');
+$gallery = getSlide('slide-footer');
 ?>
 
 <!--Site Footer Four Start-->
-<footer class="site-footer-four">
+<footer class="site-footer-four" style="display: none">
     <div class="site-footer-four__bg"
-        style="background-image: url(http://html2020.tamphat.edu.vn/insur-html/assets/images/update-17-06-2023/backgrounds/site-footer-four-bg.png);">
+        style="background-image: url({{ asset('frontend/images/site-footer-four-bg.png') }});">
     </div>
     <div class="container">
         <div class="site-footer-four__top">
@@ -13,9 +14,9 @@ $menu_footer = getMenus('menu-footer');
                 <div class="col-xl-3 col-lg-6 col-md-6 wow fadeInUp" data-wow-delay="100ms">
                     <div class="footer-widget-four__column footer-widget-four__about">
                         <div class="footer-widget-four__logo">
-                            <a href="index.html"><img
-                                    src="http://html2020.tamphat.edu.vn/insur-html/assets/images/update-17-06-2023/resources/footer-logo-two.png"
-                                    alt=""></a>
+                            <a href="{{ url('/') }}">
+                                <img src="{{ asset($fcSystem['homepage_logo']) }}" alt="{{ $fcSystem['homepage_brandname'] }}">
+                            </a>
                         </div>
                         <div class="footer-widget-four__about-text-box">
                             <p class="footer-widget__about-text">Lorem ipsum dolor sit amet, consectetur
@@ -23,34 +24,35 @@ $menu_footer = getMenus('menu-footer');
                                 incididunt ut labore et dolore magna</p>
                         </div>
                         <div class="site-footer-four__social">
-                            <a href="#"><i class="fab fa-facebook-f"></i></a>
-                            <a href="#"><i class="fab fa-twitter"></i></a>
-                            <a href="#"><i class="fab fa-skype"></i></a>
+                            @if($fcSystem['social_facebook'])
+                            <a href="{{ $fcSystem['social_facebook'] }}" rel="nofollow"><i class="fab fa-facebook-f"></i></a>
+                            @endif
+                            @if($fcSystem['social_twitter'])
+                            <a href="{{ $fcSystem['social_twitter'] }}" rel="nofollow"><i class="fab fa-twitter"></i></a>
+                            @endif
+                            @if($fcSystem['social_youtube'])
+                            <a href="{{ $fcSystem['social_youtube'] }}" rel="nofollow"><i class="fab fa-youtube"></i></a>
+                            @endif
                         </div>
                     </div>
                 </div>
+                @if( $menu_footer && $menu_footer->menu_items && count($menu_footer->menu_items) )
+                <?php $menuF = $menu_footer->menu_items->first();//dd($menuF); ?>
                 <div class="col-xl-2 col-lg-6 col-md-6 wow fadeInUp" data-wow-delay="200ms">
                     <div class="footer-widget-four__column footer-widget-four__services clearfix">
-                        <h3 class="footer-widget-four__title">Our Services</h3>
+                        <h3 class="footer-widget-four__title">{{ $menuF->title }}</h3>
+                        @if( $menuF->children )
                         <ul class="footer-widget-four__services-list list-unstyled clearfix">
+                            @foreach( $menuF->children as $v )
                             <li>
-                                <a href="about.html">About</a>
+                                <a href="{{ url($v->slug) }}" title={{ $v->title }}>{{ $v->title }}</a>
                             </li>
-                            <li>
-                                <a href="insurance-01.html">Insurance</a>
-                            </li>
-                            <li>
-                                <a href="portfolio.html">Latest Portfolio</a>
-                            </li>
-                            <li>
-                                <a href="faq.html">Our Faqs</a>
-                            </li>
-                            <li>
-                                <a href="contact.html">Get in Touch</a>
-                            </li>
+                            @endforeach
                         </ul>
+                        @endif
                     </div>
                 </div>
+                @endif
                 <div class="col-xl-4 col-lg-6 col-md-6 wow fadeInUp" data-wow-delay="300ms">
                     <div class="footer-widget-four__column footer-widget-four__contact">
                         <h3 class="footer-widget-four__title">Contact us</h3>
@@ -60,8 +62,14 @@ $menu_footer = getMenus('menu-footer');
                                     <span class="icon-telephone-call"></span>
                                 </div>
                                 <div class="content">
-                                    <p>Phone:</p>
-                                    <h3><a href="tel:0087578456">(00) 875 784 56</a></h3>
+                                    <p>Hotline:</p>
+                                    <h3>
+                                        <a href="tel:{{ $fcSystem['contact_hotline'] }}">{{ $fcSystem['contact_hotline'] }}</a>
+                                        @if( $fcSystem['contact_hotline_1'] )
+                                        <br>
+                                        <a href="tel:{{ $fcSystem['contact_hotline_1'] }}">{{ $fcSystem['contact_hotline_1'] }}</a>
+                                        @endif
+                                    </h3>
                                 </div>
                             </li>
                             <li>
@@ -70,12 +78,13 @@ $menu_footer = getMenus('menu-footer');
                                 </div>
                                 <div class="content">
                                     <p>E-mail:</p>
-                                    <h3><a href="mailto:info@gmail.com">info@gmail.com</a></h3>
+                                    <h3><a href="mailto:{{ $fcSystem['contact_email'] }}">{{ $fcSystem['contact_email'] }}</a></h3>
                                 </div>
                             </li>
                         </ul>
                     </div>
                 </div>
+
                 <div class="col-xl-3 col-lg-6 col-md-6 wow fadeInUp" data-wow-delay="400ms">
                     <div class="footer-widget-four__column footer-widget-four__news">
                         <h3 class="footer-widget-four__title">News</h3>
@@ -120,6 +129,165 @@ $menu_footer = getMenus('menu-footer');
     </div>
 </footer>
 <!--Site Footer Four End-->
+
+
+<footer class="site-footer">
+    <div class="site-footer-bg" style="background-image: url({{ asset('frontend/images/site-footer-bg.png') }});">
+    </div>
+    <div class="container">
+        <div class="site-footer__top">
+            <div class="row">
+                <div class="col-xl-3 col-lg-6 col-md-6 wow fadeInUp animated" data-wow-delay="100ms" style="visibility: visible; animation-delay: 100ms; animation-name: fadeInUp;">
+                    <div class="footer-widget__column footer-widget__about">
+                        <div class="footer-widget__logo">
+                            <a href="{{ url('/') }}">
+                                <img src="{{ asset($fcSystem['homepage_logo']) }}" alt="{{ $fcSystem['homepage_brandname'] }}">
+                            </a>
+                        </div>
+                        <div class="footer-widget__about-text-box">
+                            <p class="footer-widget__about-text">Aliqua id fugiat nostrud irure ex duis ea quis
+                                id quis ad et. Sunt qui esse pariatur duis deserunt.</p>
+                        </div>
+                        <ul class="footer-widget__contact-list list-unstyled clearfix">
+                            <li>
+                                <div class="icon">
+                                    <span class="icon-email"></span>
+                                </div>
+                                <div class="text">
+                                    <p><a href="mailto:{{ $fcSystem['contact_email'] }}">{{ $fcSystem['contact_email'] }}</a></p>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="icon">
+                                    <span class="icon-pin"></span>
+                                </div>
+                                <div class="text">
+                                    <p>{{ $fcSystem['contact_address'] }}</p>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="icon">
+                                    <span class="icon-telephone-call"></span>
+                                </div>
+                                <div class="text">
+                                    <p>
+                                        <a href="tel:{{ $fcSystem['contact_hotline'] }}">{{ $fcSystem['contact_hotline'] }}</a>
+                                        @if( !empty($fcSystem['contact_hotline_1']) )
+                                         / <a href="tel:{{ $fcSystem['contact_hotline_1'] }}">{{ $fcSystem['contact_hotline_1'] }}</a>
+                                        @endif
+                                    </p>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="icon">
+                                    <span class="icon-home"></span>
+                                </div>
+                                <div class="text">
+                                    <p>{{ $fcSystem['contact_website'] }}</p>
+                                </div>
+                            </li>
+                        </ul>
+                        <div class="site-footer__social">
+                            @if($fcSystem['social_facebook'])
+                            <a href="{{ $fcSystem['social_facebook'] }}" rel="nofollow"><i class="fab fa-facebook-f"></i></a>
+                            @endif
+                            @if($fcSystem['social_twitter'])
+                            <a href="{{ $fcSystem['social_twitter'] }}" rel="nofollow"><i class="fab fa-twitter"></i></a>
+                            @endif
+                            @if($fcSystem['social_youtube'])
+                            <a href="{{ $fcSystem['social_youtube'] }}" rel="nofollow"><i class="fab fa-youtube"></i></a>
+                            @endif
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-3 col-lg-6 col-md-6 wow fadeInUp animated" data-wow-delay="200ms" style="visibility: visible; animation-delay: 200ms; animation-name: fadeInUp;">
+                    @if( $menu_footer && $menu_footer->menu_items && count($menu_footer->menu_items) )
+                    <?php $menuF = $menu_footer->menu_items->first(); ?>
+                    <div class="footer-widget__column footer-widget__contact clearfix">
+                        <h3 class="footer-widget__title">{{ $menuF->title }}</h3>
+                        @if( $menuF->children )
+                        <ul class="footer-widget__contact-list list-unstyled clearfix">
+                            @foreach( $menuF->children as $v )
+                            <li>
+                                <a href="{{ url($v->slug) }}" title={{ $v->title }}>{{ $v->title }}</a>
+                            </li>
+                            @endforeach
+                        </ul>
+                        @endif
+                    </div>
+                    @endif
+                </div>
+                <div class="col-xl-3 col-lg-6 col-md-6 wow fadeInUp animated" data-wow-delay="300ms" style="visibility: visible; animation-delay: 300ms; animation-name: fadeInUp;">
+                    <div class="footer-widget__column footer-widget__gallery clearfix">
+                        <h3 class="footer-widget__title">Instagram</h3>
+                        <ul class="footer-widget__gallery-list list-unstyled clearfix">
+                            <li>
+                                <div class="footer-widget__gallery-img">
+                                    <img src="assets/images/resources/footer-widget-gallery-img-1.jpg" alt="">
+                                    <a href="#"><span class="fa fa-link"></span></a>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="footer-widget__gallery-img">
+                                    <img src="assets/images/resources/footer-widget-gallery-img-2.jpg" alt="">
+                                    <a href="#"><span class="fa fa-link"></span></a>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="footer-widget__gallery-img">
+                                    <img src="assets/images/resources/footer-widget-gallery-img-3.jpg" alt="">
+                                    <a href="#"><span class="fa fa-link"></span></a>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="footer-widget__gallery-img">
+                                    <img src="assets/images/resources/footer-widget-gallery-img-4.jpg" alt="">
+                                    <a href="#"><span class="fa fa-link"></span></a>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="footer-widget__gallery-img">
+                                    <img src="assets/images/resources/footer-widget-gallery-img-5.jpg" alt="">
+                                    <a href="#"><span class="fa fa-link"></span></a>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="footer-widget__gallery-img">
+                                    <img src="assets/images/resources/footer-widget-gallery-img-6.jpg" alt="">
+                                    <a href="#"><span class="fa fa-link"></span></a>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-xl-3 col-lg-6 col-md-6 wow fadeInUp animated" data-wow-delay="400ms" style="visibility: visible; animation-delay: 400ms; animation-name: fadeInUp;">
+                    <div class="footer-widget__column footer-widget__newsletter">
+                        <h3 class="footer-widget__title">Liên hệ</h3>
+                        <p class="footer-widget__newsletter-text">Liên hệ với chúng tôi</p>
+                        <form class="footer-widget__newsletter-form">
+                            <div class="footer-widget__newsletter-input-box">
+                                <input type="text" placeholder="Họ và tên" name="fullname">
+                                <input type="email" placeholder="Email" name="email">
+                                <textarea name="message" placeholder="Nội dung..." id="" cols="30" rows="10"></textarea>
+                                <button type="submit" class="footer-widget__newsletter-btn">Gửi <i class="far fa-paper-plane" style="margin:0 0 0 2px"></i></button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="site-footer__bottom">
+            <div class="row">
+                <div class="col-xl-12">
+                    <div class="site-footer__bottom-inner">
+                        <p class="site-footer__bottom-text">© All Copyright 2023 by <a href="#">Insur.com</a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
 
 
 </div><!-- /.page-wrapper -->
@@ -169,9 +337,9 @@ $menu_footer = getMenus('menu-footer');
     <div class="search-popup__overlay search-toggler"></div>
     <!-- /.search-popup__overlay -->
     <div class="search-popup__content">
-        <form action="#">
+        <form action="{{ url('') }}">
             <label for="search" class="sr-only">search here</label><!-- /.sr-only -->
-            <input type="text" id="search" placeholder="Search Here...">
+            <input type="text" name="keyword" id="search" placeholder="Tìm kiếm...">
             <button type="submit" aria-label="search submit" class="thm-btn">
                 <i class="icon-magnifying-glass"></i>
             </button>
