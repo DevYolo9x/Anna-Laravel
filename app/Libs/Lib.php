@@ -25,7 +25,7 @@ if (!function_exists('getSlide')) {
 
     function getSlide($keyword = "")
     {
-        $slide = Cache::remember('slide', 600, function () {
+        $slide = Cache::remember('slide', 600, function () use ($keyword) {
             $slide = \App\Models\CategorySlide::select('title', 'id')->where(['alanguage' => config('app.locale'), 'keyword' => $keyword])->with('slides')->first();
             return $slide;
         });

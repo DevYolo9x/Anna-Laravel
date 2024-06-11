@@ -22,7 +22,7 @@ class CategoryController extends Controller
         $segments = request()->segments();
         $slug = end($segments);
         $detail = CategoryArticle::select('id', 'slug', 'title', 'type', 'description', 'meta_description', 'meta_title', 'publish', 'lft', 'image', 'banner', 'ishome', 'highlight', 'isaside', 'isfooter', 'parentid')
-            ->with('children')
+            ->with('fields')
             ->where('alanguage', config('app.locale'))
             ->where('publish', 0)
             ->where('slug', $slug)
@@ -48,7 +48,7 @@ class CategoryController extends Controller
                     $query->limit(4)->get();
                 }])->first();
         } else {
-            $data = $data->paginate($this->paginate);
+            $data = $data->paginate();
         }
         
         // breadcrumb

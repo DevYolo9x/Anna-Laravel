@@ -50,6 +50,7 @@ Route::group(['middleware' => ['locale', 'maintenance']], function () {
     Route::post('/subcribers', [ContactController::class, 'subcribers'])->name('contactFrontend.subcribers');
     Route::post('/dang-ky-dai-ly-form', [ContactController::class, 'agency'])->name('contactFrontend.agency');
     Route::get('/tim-kiem', [CategoryController::class, 'search'])->name('homepage.search');
+    Route::get('/tim-kiem-tin-tuc', [FrontendCategoryController::class, 'search'])->name('homepage.searchArticles');
     //ajax pagination category article
     Route::post('/ajax-pagination-category-article', [FrontendCategoryController::class, 'ajaxPagination'])->name('categoryArticle.ajaxPagination');
 

@@ -45,4 +45,9 @@ class CategoryArticle extends Model
             ->select('articles.id', 'articles.title', 'articles.slug', 'articles.image', 'catalogues_relationships.catalogueid', 'config_postmetas.meta_value')
             ->orderBy('articles.order', 'asc')->orderBy('articles.id', 'desc');
     }
+
+    public function fields()
+    {
+        return $this->hasMany(ConfigPostmeta::class, 'module_id')->where(['module' => 'category_articles'])->select('module_id', 'meta_key', 'meta_value');
+    }
 }
