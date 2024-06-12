@@ -48,7 +48,7 @@ class CategoryController extends Controller
                     $query->limit(4)->get();
                 }])->first();
         } else {
-            $data = $data->paginate();
+            $data = $data->paginate(env('APP_paginate'));
         }
         
         // breadcrumb

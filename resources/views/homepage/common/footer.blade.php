@@ -1,6 +1,7 @@
 <?php
 $menu_footer = getMenus('menu-footer');
-$gallery = getSlide('slide-footer');
+$gallery = getSlide('slide-footer', 'gallery');
+// dd($gallery);
 ?>
 
 <!--Site Footer Four Start-->
@@ -37,7 +38,7 @@ $gallery = getSlide('slide-footer');
                     </div>
                 </div>
                 @if( $menu_footer && $menu_footer->menu_items && count($menu_footer->menu_items) )
-                <?php $menuF = $menu_footer->menu_items->first();//dd($menuF); ?>
+                <?php $menuF = $menu_footer->menu_items->first(); ?>
                 <div class="col-xl-2 col-lg-6 col-md-6 wow fadeInUp" data-wow-delay="200ms">
                     <div class="footer-widget-four__column footer-widget-four__services clearfix">
                         <h3 class="footer-widget-four__title">{{ $menuF->title }}</h3>
@@ -145,8 +146,7 @@ $gallery = getSlide('slide-footer');
                             </a>
                         </div>
                         <div class="footer-widget__about-text-box">
-                            <p class="footer-widget__about-text">Aliqua id fugiat nostrud irure ex duis ea quis
-                                id quis ad et. Sunt qui esse pariatur duis deserunt.</p>
+                            <p class="footer-widget__about-text">{{ $fcSystem['homepage_footer_desc'] }}</p>
                         </div>
                         <ul class="footer-widget__contact-list list-unstyled clearfix">
                             <li>
@@ -218,70 +218,36 @@ $gallery = getSlide('slide-footer');
                     @endif
                 </div>
                 <div class="col-xl-3 col-lg-6 col-md-6 wow fadeInUp animated" data-wow-delay="300ms" style="visibility: visible; animation-delay: 300ms; animation-name: fadeInUp;">
+                    @if( $gallery && $gallery->slides )
                     <div class="footer-widget__column footer-widget__gallery clearfix">
-                        <h3 class="footer-widget__title">Instagram</h3>
-                        <ul class="footer-widget__gallery-list list-unstyled clearfix">
-                            <li>
+                        <h3 class="footer-widget__title">{{ $gallery->title }}</h3>
+                        <ul class="footer-widget__gallery-list list-unstyled clearfix row">
+                            @foreach( $gallery->slides as $v )
+                            <li class="col-lg-4 col-md-4 col-4">
                                 <div class="footer-widget__gallery-img">
-                                    <img src="assets/images/resources/footer-widget-gallery-img-1.jpg" alt="">
-                                    <a href="#"><span class="fa fa-link"></span></a>
+                                    <img src="{{ asset($v->src) }}" alt="{{ $v->title }}">
+                                    <a href="{{ !empty($v->link)?$v->link:"javascript:void(0)" }}"><span class="fa fa-link"></span></a>
                                 </div>
                             </li>
-                            <li>
-                                <div class="footer-widget__gallery-img">
-                                    <img src="assets/images/resources/footer-widget-gallery-img-2.jpg" alt="">
-                                    <a href="#"><span class="fa fa-link"></span></a>
-                                </div>
-                            </li>
-                            <li>
-                                <div class="footer-widget__gallery-img">
-                                    <img src="assets/images/resources/footer-widget-gallery-img-3.jpg" alt="">
-                                    <a href="#"><span class="fa fa-link"></span></a>
-                                </div>
-                            </li>
-                            <li>
-                                <div class="footer-widget__gallery-img">
-                                    <img src="assets/images/resources/footer-widget-gallery-img-4.jpg" alt="">
-                                    <a href="#"><span class="fa fa-link"></span></a>
-                                </div>
-                            </li>
-                            <li>
-                                <div class="footer-widget__gallery-img">
-                                    <img src="assets/images/resources/footer-widget-gallery-img-5.jpg" alt="">
-                                    <a href="#"><span class="fa fa-link"></span></a>
-                                </div>
-                            </li>
-                            <li>
-                                <div class="footer-widget__gallery-img">
-                                    <img src="assets/images/resources/footer-widget-gallery-img-6.jpg" alt="">
-                                    <a href="#"><span class="fa fa-link"></span></a>
-                                </div>
-                            </li>
+                            @endforeach
                         </ul>
                     </div>
+                    @endif
                 </div>
                 <div class="col-xl-3 col-lg-6 col-md-6 wow fadeInUp animated" data-wow-delay="400ms" style="visibility: visible; animation-delay: 400ms; animation-name: fadeInUp;">
                     <div class="footer-widget__column footer-widget__newsletter">
                         <h3 class="footer-widget__title">Liên hệ</h3>
                         <p class="footer-widget__newsletter-text">Liên hệ với chúng tôi</p>
-                        <form class="footer-widget__newsletter-form">
+                        <form class="footer-widget__newsletter-form" id="form-submit-footer">
+                            @csrf
+                            @include('homepage.common.alert')
                             <div class="footer-widget__newsletter-input-box">
                                 <input type="text" placeholder="Họ và tên" name="fullname">
                                 <input type="email" placeholder="Email" name="email">
                                 <textarea name="message" placeholder="Nội dung..." id="" cols="30" rows="10"></textarea>
-                                <button type="submit" class="footer-widget__newsletter-btn">Gửi <i class="far fa-paper-plane" style="margin:0 0 0 2px"></i></button>
+                                <button type="submit" class="footer-widget__newsletter-btn btn-submit-footer">Gửi <i class="far fa-paper-plane" style="margin:0 0 0 2px"></i></button>
                             </div>
                         </form>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="site-footer__bottom">
-            <div class="row">
-                <div class="col-xl-12">
-                    <div class="site-footer__bottom-inner">
-                        <p class="site-footer__bottom-text">© All Copyright 2023 by <a href="#">Insur.com</a>
-                        </p>
                     </div>
                 </div>
             </div>
@@ -300,8 +266,9 @@ $gallery = getSlide('slide-footer');
         <span class="mobile-nav__close mobile-nav__toggler"><i class="fa fa-times"></i></span>
 
         <div class="logo-box">
-            <a href="index.html" aria-label="logo image"><img src="assets/images/resources/logo-2.png" width="143"
-                    alt=""></a>
+            <a href="{{ url('/') }}" aria-label="logo image">
+                <img src="{{ asset($fcSystem['homepage_logo']) }}" width="143" alt="{{ $fcSystem['homepage_brandname'] }}">
+            </a>
         </div>
         <!-- /.logo-box -->
         <div class="mobile-nav__container"></div>
@@ -310,19 +277,27 @@ $gallery = getSlide('slide-footer');
         <ul class="mobile-nav__contact list-unstyled">
             <li>
                 <i class="fa fa-envelope"></i>
-                <a href="mailto:needhelp@packageName__.com">needhelp@insur.com</a>
+                <a href="mailto:{{ $fcSystem['contact_email'] }}">{{ $fcSystem['contact_email'] }}</a>
             </li>
             <li>
                 <i class="fa fa-phone-alt"></i>
-                <a href="tel:666-888-0000">666 888 0000</a>
+                <a href="tel:{{ $fcSystem['contact_hotline'] }}">{{ $fcSystem['contact_hotline'] }}</a>
             </li>
         </ul><!-- /.mobile-nav__contact -->
         <div class="mobile-nav__top">
             <div class="mobile-nav__social">
-                <a href="#" class="fab fa-twitter"></a>
-                <a href="#" class="fab fa-facebook-square"></a>
-                <a href="#" class="fab fa-pinterest-p"></a>
-                <a href="#" class="fab fa-instagram"></a>
+                @if( !empty($fcSystem['social_twitter']) )
+                <a href="{{ $fcSystem['social_twitter'] }}" class="fab fa-twitter"></a>
+                @endif
+                @if( !empty($fcSystem['social_facebook']) )
+                <a href="{{ $fcSystem['social_facebook'] }}" class="fab fa-facebook-square"></a>
+                @endif
+                @if( !empty($fcSystem['social_pinterest']) )
+                <a href="{{ $fcSystem['social_pinterest'] }}" class="fab fa-pinterest-p"></a>
+                @endif
+                @if( !empty($fcSystem['social_youtube']) )
+                <a href="{{ $fcSystem['social_youtube'] }}" class="fab fa-youtube"></a>
+                @endif
             </div><!-- /.mobile-nav__social -->
         </div><!-- /.mobile-nav__top -->
 
@@ -338,7 +313,7 @@ $gallery = getSlide('slide-footer');
     <!-- /.search-popup__overlay -->
     <div class="search-popup__content">
         <form action="{{ url('') }}">
-            <label for="search" class="sr-only">search here</label><!-- /.sr-only -->
+            <label for="search" class="sr-only">Tìm kiếm</label><!-- /.sr-only -->
             <input type="text" name="keyword" id="search" placeholder="Tìm kiếm...">
             <button type="submit" aria-label="search submit" class="thm-btn">
                 <i class="icon-magnifying-glass"></i>
@@ -386,54 +361,35 @@ $gallery = getSlide('slide-footer');
 
 <!-- Javascript code -->
 @push('javascript')
-    <script>
-        var openButton = $('.openPopup');
-        var dialog = $('#dialog');
-        var closeButton = $('#close');
-        var overlay = $('#overlay');
-
-        openButton.click(function() {
-            dialog.toggleClass('hidden');
-            overlay.toggleClass('hidden');
-        })
-
-        closeButton.click(function() {
-            dialog.toggleClass('hidden');
-            overlay.toggleClass('hidden');
-        })
-
-        $(document).ready(function() {
-            $(".submitPopup").click(function(e) {
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $(".btn-submit-footer").click(function (e) {
                 e.preventDefault();
-                var _token = $("#formPopup input[name='_token']").val();
-                var fullname = $("#formPopup input[name='fullname']").val();
-                var company = $("#formPopup input[name='company']").val();
-                var tax_code = $("#formPopup input[name='tax_code']").val();
-                var email = $("#formPopup input[name='email']").val();
-                var phone = $("#formPopup input[name='phone']").val();
+                var _token = $("#form-submit-footer input[name='_token']").val();
+                var fullname = $("#form-submit-footer input[name='fullname']").val();
+                var email = $("#form-submit-footer input[name='email']").val();
+                var message = $("#form-submit-footer textarea[name='message']").val();
                 $.ajax({
-                    url: "<?php echo route('contactFrontend.popup'); ?>",
+                    url: "<?php echo route('contactFrontend.store') ?>",
                     type: 'POST',
                     data: {
                         _token: _token,
                         fullname: fullname,
-                        company: company,
-                        phone: phone,
                         email: email,
-                        tax_code: tax_code
+                        message: message
                     },
-                    success: function(data) {
+                    success: function (data) {
                         if (data.status == 200) {
-                            $("#formPopup .print-error-msg").css('display', 'none');
-                            $("#formPopup .print-success-msg").css('display', 'block');
-                            $("#formPopup .print-success-msg span").html("<?php echo $fcSystem['message_6']; ?>");
-                            setTimeout(function() {
+                            $("#form-submit-footer .print-error-msg").css('display', 'none');
+                            $("#form-submit-footer .print-success-msg").css('display', 'block');
+                            $("#form-submit-footer .print-success-msg span").html("<?php echo $fcSystem['message_2'] ?>");
+                            setTimeout(function () {
                                 location.reload();
                             }, 3000);
                         } else {
-                            $("#formPopup .print-error-msg").css('display', 'block');
-                            $("#formPopup .print-success-msg").css('display', 'none');
-                            $("#formPopup .print-error-msg span").html(data.error);
+                            $("#form-submit-footer .print-error-msg").css('display', 'block');
+                            $("#form-submit-footer .print-success-msg").css('display', 'none');
+                            $("#form-submit-footer .print-error-msg span").html(data.error);
                         }
                     }
                 });

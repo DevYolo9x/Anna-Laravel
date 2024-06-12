@@ -1,8 +1,6 @@
 <?php
 
-
 if (!function_exists('getMenus')) {
-
     function getMenus($keyword = "")
     {
         $data = Cache::remember($keyword, 600, function () use ($keyword) {
@@ -22,13 +20,13 @@ if (!function_exists('getMenus')) {
 }
 
 if (!function_exists('getSlide')) {
-
-    function getSlide($keyword = "")
+    function getSlide($keyword = "", $name = "")
     {
-        $slide = Cache::remember('slide', 600, function () use ($keyword) {
-            $slide = \App\Models\CategorySlide::select('title', 'id')->where(['alanguage' => config('app.locale'), 'keyword' => $keyword])->with('slides')->first();
-            return $slide;
+        $name = Cache::remember($name, 600, function () use ($keyword, $name) {
+            $name = \App\Models\CategorySlide::select('title', 'id')->where(['alanguage' => config('app.locale'), 'keyword' => $keyword])->with('slides')->first();
+            return $name;
         });
+        return $name;
     }
 }
 

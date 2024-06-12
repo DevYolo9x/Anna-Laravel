@@ -32,45 +32,31 @@
                             <button type="submit"><i class="icon-magnifying-glass"></i></button>
                         </form>
                     </div>
+
+                    @if( $productAside )
                     <div class="sidebar__single sidebar__post">
-                        <h3 class="sidebar__title">Latest Posts</h3>
+                        <h3 class="sidebar__title">Sản phẩm phần mềm</h3>
                         <ul class="sidebar__post-list list-unstyled">
+                            @foreach( $productAside as $k => $v )
                             <li>
                                 <div class="sidebar__post-image">
-                                    <img src="assets/images/blog/lp-1-1.jpg" alt="">
+                                    <span class="number">{{ $k+1 }}</span>
+                                    <img src="{{ asset(!empty($v->image)?$v->image:'images/404.jpg') }}" alt="{{ $v->title }}">
                                 </div>
                                 <div class="sidebar__post-content">
                                     <h3>
-                                        <span class="sidebar__post-content-meta"><i class="far fa-user-circle"></i> by Admin</span>
-                                        <a href="news-details.html">Get tips to get quick
-                                            life insurance</a>
+                                        @if( $v->user )
+                                        <span class="sidebar__post-content-meta"><i class="far fa-user-circle"></i> {{ $v->user->name }}</span>
+                                        @endif
+                                        <a href="news-details.html">{{ $v->title }}</a>
                                     </h3>
                                 </div>
                             </li>
-                            <li>
-                                <div class="sidebar__post-image">
-                                    <img src="assets/images/blog/lp-1-2.jpg" alt="">
-                                </div>
-                                <div class="sidebar__post-content">
-                                    <h3>
-                                        <span class="sidebar__post-content-meta"><i class="far fa-user-circle"></i> by Admin</span>
-                                        <a href="news-details.html">Promoting the Rights of Children</a>
-                                    </h3>
-                                </div>
-                            </li>
-                            <li>
-                                <div class="sidebar__post-image">
-                                    <img src="assets/images/blog/lp-1-3.jpg" alt="">
-                                </div>
-                                <div class="sidebar__post-content">
-                                    <h3>
-                                        <span class="sidebar__post-content-meta"><i class="far fa-user-circle"></i> by Admin</span>
-                                        <a href="news-details.html">Bring to the table win-win survival</a>
-                                    </h3>
-                                </div>
-                            </li>
+                            @endforeach
                         </ul>
                     </div>
+                    @endif
+
                 </div>
             </div>
         </div>

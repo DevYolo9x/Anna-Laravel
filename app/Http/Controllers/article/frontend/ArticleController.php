@@ -4,6 +4,7 @@ namespace App\Http\Controllers\article\frontend;
 
 use App\Http\Controllers\Controller;
 use App\Models\Article;
+use App\Models\Product;
 use App\Models\CategoryArticle;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -32,6 +33,9 @@ class ArticleController extends Controller
             return redirect()->route('homepage.index');
         }
         $catalogues = $detail->catalogues;
+
+        $productAside =  Product::select('id', 'title', 'slug', 'image', 'description', 'userid_created')->with('user')->where('alanguage', config('app.locale'))->where('isaside', 1)->where('publish', 0)->orderBy('order', 'ASC')->orderBy('id', 'DESC')->get();
+
         // breadcrumb
         $breadcrumb = CategoryArticle::select('title', 'slug')->where('alanguage', config('app.locale'))->where('lft', '<=', $catalogues->lft)->where('rgt', '>=', $catalogues->lft)->orderBy('lft', 'ASC')->orderBy('order', 'ASC')->get();
         //bài viết liên quan
@@ -64,6 +68,6 @@ class ArticleController extends Controller
         if( $catalogues['type'] == 1 ){
             $view = 'article.frontend.article.service';
         }
-        return view($view, compact('module', 'fcSystem', 'detail', 'seo', 'breadcrumb', 'sameArticle', 'catalogues', 'comment_view'));
+        return view($view, compact('module', 'fcSystem', 'detail', 'seo', 'breadcrumb', 'sameArticle', 'catalogues', 'comment_view', 'productAside'));
     }
 }

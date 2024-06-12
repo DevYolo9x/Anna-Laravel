@@ -109,7 +109,7 @@ if (!function_exists('htmlBreadcrumb')) {
             $html .= '<section class="page-header">
                     <div class="page-header-bg" style="background-image: url('.$banner.')">
                     </div>
-                    <div class="page-header-shape-1"><img src="'. asset('frontend.images.page-header-shape-1.png') .'" alt="shape"></div>
+                    <div class="page-header-shape-1"><img src="'. asset('frontend/images/page-header-shape-1.png') .'" alt="shape"></div>
                     <div class="container">
                         <div class="page-header__inner">
                             <ul class="thm-breadcrumb list-unstyled">
@@ -127,7 +127,7 @@ if (!function_exists('htmlBreadcrumb')) {
             $html .= '<section class="page-header">
                     <div class="page-header-bg" style="background-image: url('.$banner.')">
                     </div>
-                    <div class="page-header-shape-1"><img src="'. asset('frontend.images.page-header-shape-1.png') .'" alt="shape"></div>
+                    <div class="page-header-shape-1"><img src="'. asset('frontend/images/page-header-shape-1.png') .'" alt="shape"></div>
                     <div class="container">
                         <div class="page-header__inner">
                             <ul class="thm-breadcrumb list-unstyled">

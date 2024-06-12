@@ -34,7 +34,7 @@ class HomeController extends Controller
     public function index()
     {
         $fcSystem = $this->system->fcSystem();
-        $slideHome = getSlide('slide-home-main');
+        $slideHome = getSlide('slide-home-main', 'slideHome');
 
         $home1Product =
             \App\Models\Product::select('id', 'title', 'slug', 'image', 'price', 'price_sale', 'catalogue_id')

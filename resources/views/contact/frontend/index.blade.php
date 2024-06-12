@@ -110,9 +110,7 @@
                 e.preventDefault();
                 var _token = $("#form-submit-contact input[name='_token']").val();
                 var fullname = $("#form-submit-contact input[name='fullname']").val();
-                var subject = $("#form-submit-contact input[name='subject']").val();
                 var email = $("#form-submit-contact input[name='email']").val();
-                var phone = $("#form-submit-contact input[name='phone']").val();
                 var message = $("#form-submit-contact textarea[name='message']").val();
                 $.ajax({
                     url: "<?php echo route('contactFrontend.store') ?>",
@@ -120,8 +118,6 @@
                     data: {
                         _token: _token,
                         fullname: fullname,
-                        subject: subject,
-                        phone: phone,
                         email: email,
                         message: message
                     },
