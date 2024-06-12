@@ -257,6 +257,7 @@ $(document).on('click', '.edit-slide', function() {
 });
 
 function slide_update(object, id) {
+    console.log(object)
     let html = '';
     html = html + '<div class="grid grid-cols-12 gap-6 mt-5">';
     html = html + '<div class="col-span-6">';
@@ -272,7 +273,7 @@ function slide_update(object, id) {
     html = html + '<div class="form-row space-y-3">';
     html = html + '<div class="">';
     html = html + '<label>Chú thích</label> ';
-    html = html + '<input type="text" placeholder="" name="title" class="form-control" value="' + object.title + '">';
+    html = html + '<textarea type="text" placeholder="" name="title" class="form-control">' + object.title + '</textarea>';
     html = html + '</div>';
     html = html + '<div class="">';
     html = html + '<label>Đường dẫn</label>';

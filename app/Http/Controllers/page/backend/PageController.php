@@ -78,7 +78,7 @@ class PageController extends Controller
             return redirect()->route('pages.index')->with('error', "Trang không tồn tại");
         }
         if ($detail->id == 14) {
-            $arrID = array( 37, 40, 38, 35, 39);
+            $arrID = array( 53, 57,54,55,56, 58,59,60,61,62,63, 64,65,66,67 );
             $order = implode(',', $arrID);
             $field = \App\Models\ConfigColum::where(['trash' => 0, 'publish' => 0, 'module' => $module])->whereIn('id', $arrID)->orderByRaw("FIELD(id, $order)")->get();
         } else if ($detail->id == 68) {

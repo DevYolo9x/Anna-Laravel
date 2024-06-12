@@ -35,6 +35,8 @@ class HomeController extends Controller
     {
         $fcSystem = $this->system->fcSystem();
         $slideHome = getSlide('slide-home-main', 'slideHome');
+        $slideAdv = getSlide('home-adv', 'slideAdv');
+        //dd($slideHome);
 
         $home1Product =
             \App\Models\Product::select('id', 'title', 'slug', 'image', 'price', 'price_sale', 'catalogue_id')
@@ -95,9 +97,11 @@ class HomeController extends Controller
         $homeNews = \App\Models\CategoryArticle::select('id', 'title', 'slug')
             ->where(['alanguage' => config('app.locale'), 'publish' => 0, 'ishome' => 1])
             ->with(['posts' => function ($query) {
-                $query->limit(4)->get();
+                $query->limit(20)->get();
             }])
             ->first();
+
+            // dd($homeNews);
 
         /*
         $homeNews =
@@ -136,7 +140,7 @@ class HomeController extends Controller
         $seo['meta_title'] = !empty($page['meta_title']) ? $page['meta_title'] : $page['title'];
         $seo['meta_description'] = !empty($page['meta_description']) ? $page['meta_description'] : '';
         $seo['meta_image'] = !empty($page['image']) ? url($page['image']) : '';
-        return view('homepage.home.index', compact('page', 'module', 'seo', 'fcSystem', 'slideHome', 'home2Product', 'homeNews', 'home1CategoryProduct', 'home2CategoryProduct', 'home3CategoryProduct', 'fields'));
+        return view('homepage.home.index', compact('page', 'module', 'seo', 'fcSystem', 'slideHome', 'slideAdv', 'homeNews', 'home1CategoryProduct', 'home2CategoryProduct', 'home3CategoryProduct', 'fields'));
     }
 
     public function sitemap()
