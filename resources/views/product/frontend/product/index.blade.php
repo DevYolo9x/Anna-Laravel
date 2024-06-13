@@ -129,355 +129,225 @@ if (!empty($wishlist)) {
 
 <input type="hidden" value="<?php echo $detail->id ?>" id="detailProductID">
 
+{!!htmlBreadcrumb($detail->title, $breadcrumb, '')!!}
+
 {{-- Detail --}}
-<div id="main" class="sitemap main-product-detail pb-[30px]">
-    {!!htmlBreadcrumb($detail->title,$breadcrumb)!!}
-    <div class="content-product-detail pt-[30px]">
-        <div class="container mx-auto pl-4 pr-4">
-            <div class="flex flex-wrap justify-between -mx-3">
-                <div class="w-full md:w-1/2 px-3">
-                    <div class="slider">
-                        <div class="slider__flex">
-                            <div class="slider__images">
-                                <div class="swiper-container">
-                                    <!-- Слайдер с изображениями -->
-                                    <div class="swiper-wrapper">
-                                        <div class="swiper-slide">
-                                            <div class="slider__image">
-                                                <img src="{{ asset($detail->image) }}" alt="{{ $detail->title }}"/>
-                                            </div>
-                                        </div>
-                                        @if(!empty($listAlbums))
-                                            @foreach($listAlbums as $key=> $item)
-                                            <div class="swiper-slide">
-                                                <div class="slider__image">
-                                                    <img src="{{ asset($item) }}" alt="{{ $detail->title }}"/>
-                                                </div>
-                                            </div>
-                                            @endforeach
-                                        @endif
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="slider__col mt-[15px]">
-                                <div class="slider__prev">
-                                    <i class="fa-solid fa-angle-left"></i>
-                                </div>
-                                <!-- Кнопка для переключения на предыдущий слайд -->
-
-                                <div class="slider__thumbs">
-                                    <div class="swiper-container">
-                                        <!-- Слайдер с превью -->
-                                        <div class="swiper-wrapper">
-                                            <div class="swiper-slide">
-                                                <div class="slider__image">
-                                                    <img src="{{ asset($detail->image) }}" alt="{{ $detail->title }}"/>
-                                                </div>
-                                            </div>
-                                            @if(!empty($listAlbums))
-                                                @foreach($listAlbums as $key=> $item)
-                                                    <div class="swiper-slide">
-                                                        <div class="slider__image">
-                                                            <img src="{{ asset($item) }}" alt="{{ $detail->title }}"/>
-                                                        </div>
-                                                    </div>
-                                                @endforeach
-                                            @endif
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="slider__next">
-                                    <i class="fa-solid fa-angle-right"></i>
-                                </div>
-                                <!-- Кнопка для переключения на следующий слайд -->
-                            </div>
+<section class="product-details">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-6 col-xl-6">
+                        <div class="product-details__img">
+                            <img src="{{ asset($detail->image) }}" alt="{{ $detail->title }}">
                         </div>
                     </div>
-                    <style>
-                        .slider .swiper-container {
-                            width: 100%;
-                            height: 100%;
-                        }
-
-                        .slider__prev,
-                        .slider__next {
-                            cursor: pointer;
-
-                            color: #333;
-                        }
-
-                        .slider__prev:focus,
-                        .slider__next:focus {
-                            outline: none;
-                        }
-
-                        .content-product-detail .slider__col {
-                            position: relative;
-                        }
-
-                        .content-product-detail .slider__col .slider__prev {
-                            position: absolute;
-                            top: 50%;
-                            left: 5px;
-                            transform: translateY(-50%);
-                            z-index: 999;
-                        }
-
-                        .content-product-detail .slider__col .slider__next {
-                            position: absolute;
-                            top: 50%;
-                            right: 5px;
-                            transform: translateY(-50%);
-                            z-index: 999;
-                        }
-
-                        .slider__thumbs .slider__image {
-                            transition: 0.25s;
-                            -webkit-filter: grayscale(100%);
-                            filter: grayscale(100%);
-                            opacity: 0.5;
-                        }
-
-                        .slider__thumbs .slider__image:hover {
-                            opacity: 1;
-                        }
-
-                        .slider__thumbs .swiper-slide-thumb-active .slider__image {
-                            -webkit-filter: grayscale(0%);
-                            filter: grayscale(0%);
-                            opacity: 1;
-                        }
-
-                        .slider__images {
-                            height: 400px;
-                        }
-
-                        .slider__images .slider__image img {
-                            transition: 3s;
-                        }
-
-                        .slider__images .slider__image:hover img {
-                            transform: scale(1.1);
-                        }
-
-                        .slider__image {
-                            width: 100%;
-                            height: 100%;
-
-                            overflow: hidden;
-                        }
-
-                        .slider__image img {
-                            display: block;
-                            width: 100%;
-                            height: 100%;
-
-                            object-fit: contain;
-                        }
-                    </style>
-                    <!-- Swiper JS -->
-                    <!-- END: slide product image PC-->
-                </div>
-                <div class="w-full md:w-1/2 px-3 lg:mt-0 md:mt-0 sm:mt-4 mt-4">
-                    <h1 class="text-f25 mb-[5px] font-medium">
-                        {{ $detail->title }}
-                    </h1>
-                    <p class="text-f14 mb-[3px] hide hidden">
-                        Mã: <span class="text-blue_primary tp_product_code">{{ $detail->code }}</span>
-                    </p>
-                    <p class="text-f14 hide hidden">
-                        Tình trạng:
-                        <span class="text-blue_primary js_product_stock">{!! $product_stock_title !!}</span>
-                    </p>
-                    <p class="price mt-[10px] border-b-[1px] pb-[10px]">
-                      <span class="text-f25 font-bold text-red-600">{{$price['price_final']}} </span>
-                        <del class="text-f16 text-gray-400 pl-[10px]">{{$price['price_old']}}</del>
-                    </p>
-
-                    <div class="size-detail mt-[15px]">
-                        <!--START: product version -->
-                        @if ($type == 'variable' && !empty($attributes))
-                            <?php $i = 0;
-                            ?>
-                            @foreach($attributes as $key => $item)
-                                <?php $i++; ?>
-                                @if(count($item) > 0)
-                                    <div class="box-variable mb-3">
-                                        <div class="font-bold text-base mb-1">{{$key}}</div>
-                                        <div class="flex flex-wrap">
-                                            @foreach ($item as $k => $val)
-                                                <a href="javascript:void(0)" class="tp_item_variable variable_{{$i}} tp_item_variable_{{$val['id']}} py-1 px-5 border mb-2 mr-2 @if($k == 0) checked @endif" data-id="{{$val['id']}}" data-stt="<?php echo !empty($i == count($attributes)) ? 0 : 1 ?>">
-                                                    {{$val['title']}}
-                                                </a>
-                                            @endforeach
-                                        </div>
-                                    </div>
-                            @endif
-                        @endforeach
-                    @endif
-                    <!--END: product version -->
-                    </div>
-
-                    <div class="w-full py-4">
-                        <div class="font-black mb-2">Số lượng</div>
-                        <div class="custom-number-input h-10 w-32 flex flex-row h-10 w-full rounded-lg relative bg-transparent mt-1">
-                            <button class="card-dec bg-gray-200 text-gray-600 hover:text-gray-700 hover:bg-gray-400 h-full w-20 rounded-l cursor-pointer outline-none leading-[50px]" style="width: 35px;">
-                                <span class="m-auto text-2xl font-thin">−</span>
-                            </button>
-                            <input type="number"
-                                    class="tp_cardQuantity card-quantity outline-none focus:outline-none text-center w-full bg-gray-100 font-semibold text-md hover:text-black focus:text-black md:text-basecursor-default flex items-center text-gray-700 outline-none"
-                                    name="custom-input-number"
-                                    value="1"  style="width: 100px;"/>
-                            <button class="card-inc bg-gray-200 text-gray-600 hover:text-gray-700 hover:bg-gray-400 h-full w-20 rounded-r cursor-pointer leading-[50px]" style="width: 35px;">
-                                <span class="m-auto text-2xl font-thin">+</span>
-                            </button>
+                    <div class="col-lg-6 col-xl-6">
+                        <div class="product-details__top">
+                            <h3 class="product-details__title">{{ $detail->title }}</h3>
                         </div>
-                        <div class="desc text-f14 mt-[15px] content-content">
+                        <div class="product-details__reveiw">
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star"></i>
+                            <span>2 Customer Reviews</span>
+                        </div>
+                        <div class="product-details__content">
                             {!! $detail->description !!}
                         </div>
-                        <div class="list-content" style="display: none">
-                            <p class="note italic mt-[5px]">
-                                *Lưu ý:
-                                <span class="text-red">Giá chưa bao gồm VAT.</span>
-                            </p>
-                        </div>
-                        <div class="mt-5">
-                            <button data-quantity="1" data-id="{{$detail->id}}" data-title="{{$detail->title}}" data-price="<?php echo !empty($price['price_final_none_format']) ? $price['price_final_none_format'] : 0 ?>" data-cart="0" data-src="" data-type="{{$type}}"  class="tp_addToCart addtocart uppercase  h-[40px]  mb-[10px] border border-color_primary text-white bg-color_primary hover:text-color_primary hover:bg-white transition-all flex-1 cursor-pointer items-center inline-flex rounded-md px-6 justify-center" data-title-version="">
-                                Thêm vào giỏ hàng
-                            </button>
-                            <button data-cart="1" data-quantity="1" data-id="{{$detail->id}}" data-title="{{$detail->title}}" data-price="<?php echo !empty($price['price_final_none_format']) ? $price['price_final_none_format'] : 0 ?>" data-cart="0" data-src="" data-type="{{$type}}" class="tp_addToCart addtocart uppercase  h-[40px]  mb-[10px] border border-color_primary text-white bg-color_primary hover:text-color_primary hover:bg-white transition-all flex-1 cursor-pointer items-center inline-flex rounded-md px-6 justify-center"
-                                    data-title-version="">
-                                Mua hàng
-                            </button>
+
+                        <div class="product-details__social">
+                            <div class="title">
+                                <h3>Share with friends</h3>
+                            </div>
+                            <div class="product-details__social-link">
+                                <a href="#"><span class="fab fa-twitter"></span></a>
+                                <a href="#"><span class="fab fa-facebook"></span></a>
+                                <a href="#"><span class="fab fa-pinterest-p"></span></a>
+                                <a href="#"><span class="fab fa-instagram"></span></a>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-            <!-- start: box 5 -->
-            <section class="mt-[30px] md:mt-[60px] description-section wow fadeInUp">
-                <div class="tab-detail">
-                    <nav class="tabs flex justify-start border border-gray-200">
-                        <button data-target="panel-1" class="px-[10px]  py-[10px] md:px-[15px] text-f16 font-bold mr-[5px] md:mr-[15px] tab active block hover:text-green focus:outline-none">
-                            Thông tin
-                        </button>
-                        <button data-target="panel-2" class="hide hidden px-[10px]  py-[10px] md:px-[15px]  text-f16 font-bold mr-[5px] md:mr-[15px] tab block hover:text-green focus:outline-none">
-                            Thông tin kỹ thuật
-                        </button>
+        </section>
 
-                    </nav>
-                </div>
-
-                <div id="panels"
-                        class="p-[10px] md:p-[20px] bg-white border border-gray-100">
-                    <div class="panel-1 tab-content active">
-                        <div class="content-content">
-                            {!! $detail->content !!}
-                        </div>
-                    </div>
-                    <div class="panel-2 tab-content">
-                        <div class="content-content">
-                            {!! showField($detail->fields, 'config_colums_editor_product_specifications') !!}
-                        </div>
+        <section class="portfolio">
+            <div class="container">
+                <div class="row">
+                    <div class="col-xl-12">
+                        <ul class="portfolio-filter style1 post-filter has-dynamic-filters-counter list-unstyled">
+                            <li data-filter=".filter-item" class=""><span class="filter-text">All<span class="count">(9)</span></span></li>
+                            <li data-filter=".stra" class="active"><span class="filter-text">Strategy<span class="count">(6)</span></span></li>
+                            <li data-filter=".busi" class=""><span class="filter-text">Business<span class="count">(7)</span></span></li>
+                            <li data-filter=".insur" class=""><span class="filter-text">Insurance<span class="count">(2)</span></span></li>
+                            <li data-filter=".poli" class=""><span class="filter-text last-pd-none">Policies<span class="count">(5)</span></span></li>
+                        </ul>
                     </div>
                 </div>
-            </section>
-            <!-- end: box5 -->
-            @if(!empty($productSame))
-            <div class="other-product mt-[20px] md:mt-[40px]">
-                <h2 class="mb-[20px]  text-f25  font-bold leading-[30px] md:leading-[40px] text-color_primary">
-                    Sản phẩm liên quan
-                </h2>
-                <div class="slider-raleted-product owl-carousel">
-                    @foreach( $productSame as $item )
-                        {!! htmlItemProduct( $item ) !!}
-                    @endforeach
+                <div class="row filter-layout masonary-layout" style="position: relative; height: 880px;">
+                    <!--Portfolio Single Start-->
+                    <div class="col-xl-4 col-lg-6 col-md-6 filter-item stra busi" style="position: absolute; left: 0px; top: 0px;">
+                        <div class="portfolio__single">
+                            <div class="portfolio__img">
+                                <img src="assets/images/project/portfolio-1-1.jpg" alt="">
+                                <div class="portfolio__plus">
+                                    <a href="assets/images/project/portfolio-1-1.jpg" class="img-popup"><span class="icon-plus"></span></a>
+                                </div>
+                                <div class="portfolio__content">
+                                    <p class="portfolio__sub-title">Strategy</p>
+                                    <h4 class="portfolio__title"><a href="portfolio-details.html">Insurance policy</a>
+                                    </h4>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--Portfolio Single End-->
+                    <!--Portfolio Single Start-->
+                    <div class="col-xl-4 col-lg-6 col-md-6 filter-item stra busi insur" style="position: absolute; left: 400px; top: 0px;">
+                        <div class="portfolio__single">
+                            <div class="portfolio__img">
+                                <img src="assets/images/project/portfolio-1-2.jpg" alt="">
+                                <div class="portfolio__plus">
+                                    <a href="assets/images/project/portfolio-1-2.jpg" class="img-popup"><span class="icon-plus"></span></a>
+                                </div>
+                                <div class="portfolio__content">
+                                    <p class="portfolio__sub-title">Strategy</p>
+                                    <h4 class="portfolio__title"><a href="portfolio-details.html">Insurance policy</a>
+                                    </h4>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--Portfolio Single End-->
+                    <!--Portfolio Single Start-->
+                    <div class="col-xl-4 col-lg-6 col-md-6 filter-item stra busi poli" style="position: absolute; left: 800px; top: 0px;">
+                        <div class="portfolio__single">
+                            <div class="portfolio__img">
+                                <img src="assets/images/project/portfolio-1-3.jpg" alt="">
+                                <div class="portfolio__plus">
+                                    <a href="assets/images/project/portfolio-1-3.jpg" class="img-popup"><span class="icon-plus"></span></a>
+                                </div>
+                                <div class="portfolio__content">
+                                    <p class="portfolio__sub-title">Strategy</p>
+                                    <h4 class="portfolio__title"><a href="portfolio-details.html">Insurance policy</a>
+                                    </h4>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--Portfolio Single End-->
+                    <!--Portfolio Single Start-->
+                    <div class="col-xl-4 col-lg-6 col-md-6 filter-item poli busi" style="position: absolute; left: 400px; top: 0px; display: none;">
+                        <div class="portfolio__single">
+                            <div class="portfolio__img">
+                                <img src="assets/images/project/portfolio-1-4.jpg" alt="">
+                                <div class="portfolio__plus">
+                                    <a href="assets/images/project/portfolio-1-4.jpg" class="img-popup"><span class="icon-plus"></span></a>
+                                </div>
+                                <div class="portfolio__content">
+                                    <p class="portfolio__sub-title">Strategy</p>
+                                    <h4 class="portfolio__title"><a href="portfolio-details.html">Insurance policy</a>
+                                    </h4>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--Portfolio Single End-->
+                    <!--Portfolio Single Start-->
+                    <div class="col-xl-4 col-lg-6 col-md-6 filter-item stra poli" style="position: absolute; left: 0px; top: 440px;">
+                        <div class="portfolio__single">
+                            <div class="portfolio__img">
+                                <img src="assets/images/project/portfolio-1-5.jpg" alt="">
+                                <div class="portfolio__plus">
+                                    <a href="assets/images/project/portfolio-1-5.jpg" class="img-popup"><span class="icon-plus"></span></a>
+                                </div>
+                                <div class="portfolio__content">
+                                    <p class="portfolio__sub-title">Strategy</p>
+                                    <h4 class="portfolio__title"><a href="portfolio-details.html">Insurance policy</a>
+                                    </h4>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--Portfolio Single End-->
+                    <!--Portfolio Single Start-->
+                    <div class="col-xl-4 col-lg-6 col-md-6 filter-item insur busi" style="position: absolute; left: 400px; top: 0px; display: none;">
+                        <div class="portfolio__single">
+                            <div class="portfolio__img">
+                                <img src="assets/images/project/portfolio-1-6.jpg" alt="">
+                                <div class="portfolio__plus">
+                                    <a href="assets/images/project/portfolio-1-6.jpg" class="img-popup"><span class="icon-plus"></span></a>
+                                </div>
+                                <div class="portfolio__content">
+                                    <p class="portfolio__sub-title">Strategy</p>
+                                    <h4 class="portfolio__title"><a href="portfolio-details.html">Insurance policy</a>
+                                    </h4>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--Portfolio Single End-->
+                    <!--Portfolio Single Start-->
+                    <div class="col-xl-4 col-lg-6 col-md-6 filter-item stra busi" style="position: absolute; left: 400px; top: 440px;">
+                        <div class="portfolio__single">
+                            <div class="portfolio__img">
+                                <img src="assets/images/project/portfolio-1-7.jpg" alt="">
+                                <div class="portfolio__plus">
+                                    <a href="assets/images/project/portfolio-1-7.jpg" class="img-popup"><span class="icon-plus"></span></a>
+                                </div>
+                                <div class="portfolio__content">
+                                    <p class="portfolio__sub-title">Strategy</p>
+                                    <h4 class="portfolio__title"><a href="portfolio-details.html">Insurance policy</a>
+                                    </h4>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--Portfolio Single End-->
+                    <!--Portfolio Single Start-->
+                    <div class="col-xl-4 col-lg-6 col-md-6 filter-item stra poli" style="position: absolute; left: 800px; top: 440px;">
+                        <div class="portfolio__single">
+                            <div class="portfolio__img">
+                                <img src="assets/images/project/portfolio-1-8.jpg" alt="">
+                                <div class="portfolio__plus">
+                                    <a href="assets/images/project/portfolio-1-8.jpg" class="img-popup"><span class="icon-plus"></span></a>
+                                </div>
+                                <div class="portfolio__content">
+                                    <p class="portfolio__sub-title">Strategy</p>
+                                    <h4 class="portfolio__title"><a href="portfolio-details.html">Insurance policy</a>
+                                    </h4>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--Portfolio Single End-->
+                    <!--Portfolio Single Start-->
+                    <div class="col-xl-4 col-lg-6 col-md-6 filter-item poli busi" style="position: absolute; left: 400px; top: 440px; display: none;">
+                        <div class="portfolio__single">
+                            <div class="portfolio__img">
+                                <img src="assets/images/project/portfolio-1-9.jpg" alt="">
+                                <div class="portfolio__plus">
+                                    <a href="assets/images/project/portfolio-1-9.jpg" class="img-popup"><span class="icon-plus"></span></a>
+                                </div>
+                                <div class="portfolio__content">
+                                    <p class="portfolio__sub-title">Strategy</p>
+                                    <h4 class="portfolio__title"><a href="portfolio-details.html">Insurance policy</a>
+                                    </h4>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--Portfolio Single End-->
                 </div>
             </div>
-            @endif
-        </div>
-    </div>
-</div>
-
+        </section>
 @endsection
 
 @push('javascript')
 
-<script type="text/javascript" src="{{asset('product/rating/bootstrap-rating.min.js')}}"></script>
-<script src="https://unpkg.com/flowbite@1.5.2/dist/flowbite.js"></script>
-<script src="https://unpkg.com/flowbite@1.5.2/dist/datepicker.js"></script>
-<script src="{{asset('frontend/js/common/swiper-bundle.min.js')}}"></script>
-
-<script src="{{asset('frontend/library/js/common.js')}}"></script>
-
-<script>
-    //hieu ung wow------------------------------------------
-    wow = new WOW({
-        animateClass: "animated",
-        offset: 100,
-        callback: function (box) {
-            console.log("WOW: animating <" + box.tagName.toLowerCase() + ">");
-        },
-    });
-    wow.init();
-
-    const sliderThumbs = new Swiper(".slider__thumbs .swiper-container", {
-        direction: "vertical",
-        slidesPerView: 4,
-        spaceBetween: 10,
-        navigation: {
-            nextEl: ".slider__next",
-            prevEl: ".slider__prev",
-        },
-        freeMode: true,
-        breakpoints: {
-            0: {
-                direction: "horizontal",
-            },
-            768: {
-                direction: "horizontal",
-            },
-        },
-    });
-    const sliderImages = new Swiper(".slider__images .swiper-container", {
-        direction: "vertical",
-        slidesPerView: 1,
-        spaceBetween: 32,
-        mousewheel: true,
-        navigation: {
-            nextEl: ".slider__next",
-            prevEl: ".slider__prev",
-        },
-        grabCursor: true,
-        thumbs: {
-            swiper: sliderThumbs,
-        },
-        breakpoints: {
-            0: {
-                direction: "horizontal",
-            },
-            768: {
-                direction: "vertical",
-            },
-        },
-    });
-</script>
-
 @endpush
 
 @push('css')
-
-<link rel="stylesheet" href="{{asset('frontend/library/css/products.css')}}" />
-<link rel="stylesheet" href="{{asset('frontend/cts/css/swiper-bundle.min.css')}}" />
-
-<style>
-    .box-variable .tp_item_variable.checked {
-        border-color: red;
-    }
-</style>
-
-<script>
-    var module = 'product';
-</script>
 
 @endpush

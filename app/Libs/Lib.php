@@ -20,13 +20,20 @@ if (!function_exists('getMenus')) {
 }
 
 if (!function_exists('getSlide')) {
-    function getSlide($keyword = "", $name = "")
+
+    function getSlide($keyword = "")
     {
-        $name = Cache::remember($name, 600, function () use ($keyword, $name) {
-            $name = \App\Models\CategorySlide::select('title', 'id')->where(['alanguage' => config('app.locale'), 'keyword' => $keyword])->with('slides')->first();
-            return $name;
+        if( $keyword == '' )
+            return;
+
+        $data = Cache::remember($keyword, 600, function () use ($keyword) {
+
+            $data = \App\Models\CategorySlide::select('title', 'id')->where(['alanguage' => config('app.locale'), 'keyword' => $keyword])->with('slides')->first();
+
+            return $data;
         });
-        return $name;
+
+        return $data;
     }
 }
 

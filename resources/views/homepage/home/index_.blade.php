@@ -67,31 +67,86 @@
     <!--Main Slider End-->
     @endif
 
-    @if( $homeProductCategory && $homeProductCategory->countProduct && count($homeProductCategory->countProduct) )
-    <?php $chuckHomeProduct = array_chunk($homeProductCategory->countProduct->toArray(), 6); ?>
+    <!-- @if( $homeProduct )
+    <section class="product-home" style="display: none;">
+        <div class="container">
+            <div class="nav-top">
+                <div class="nav-tab text-center" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+                    @foreach( $homeProduct as $k => $v )
+                    <a class="nav-link mb-3 p-3 shadow @if($k==0) active @endif" data-toggle="pill" href="#v-pills-{{ $v->slug }}" role="tab" aria-controls="v-pills-{{ $v->slug }}" aria-selected="true">
+                        <i class="fa fa-user-circle-o mr-2"></i>
+                        <span class="font-weight-bold small text-uppercase">{{ $v->title }}</span>
+                    </a>
+                    @endforeach
+                </div>
+
+                <div class="tab-content" id="v-pills-tabContent">
+                    @foreach( $homeProduct as $k => $v )
+                    <div class="tab-pane fade @if($k==0) show active @endif" id="v-pills-{{ $v->slug }}" role="tabpanel" aria-labelledby="v-pills-{{ $v->slug }}">
+                        <div class="tab-home-product">
+                            <div class="tab-item" id="">
+                                <div class="row">
+                                    <div class="col-lg-6">
+                                        <div class="left-box">
+                                            <img src="{{ asset(!empty($v->image)?$v->image:'images/404.png') }}" alt="{{ $v->title }}">
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="right-box">
+                                            <div class="content">
+                                                <h3><a href="{{ route('routerURL', ['slug' => $v->slug]) }}" title="{{ $v->title }}">{{ $v->title }}</a></h3>
+                                                <div class="description">
+                                                    {!! $v->description !!}
+                                                </div>
+                                                <a class="readmore btn btn-3 hover-border-1" href="{{ route('routerURL', ['slug' => $v->slug]) }}">
+                                                    <span>
+                                                        Xem thêm <i class="fas fa-angle-double-right"></i>
+                                                    </span>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>    
+                    </div>
+                    @endforeach
+                </div>
+            </div>
+        </div>
+    </section>
+    @endif -->
+
+    @if( $homeProduct && count($homeProduct) && $homeProduct->countProduct && count($homeProduct->countProduct) )
+    <?php $chuckHomeProduct = array_chunk($homeProduct->countProduct->toArray(), 6); ?>
     <section class="product-home">
         <div class="container">
             <div class="row">
                 <div class="col-lg-6">
-                    <h3 class="title-box">{{ $homeProductCategory->title }}</h3>
+                    <h3 class="title-box">{{ $homeProduct->title }}</h3>
                     <div class="desc">
-                        {!! $homeProductCategory->description !!}
+                        {!! $homeProduct->description !!}
                     </div>
                     <div class="card-box tab-home-product">
                         <div class="row">
                             <div class="col-lg-5">
                                 <div class="left-box">
-                                    <img src="{{ asset($homeProductCategory->countProduct->first()->image) }}" alt="{{ $homeProductCategory->countProduct->first()->title }}">
+                                    <img src="https://anavn.com.vn/UploadData/files/phan-mem-hanh-chinh-9_0.jpg" alt="">
                                 </div>
                             </div>
                             <div class="col-lg-7">
                                 <div class="right-box render-product">
                                     <div class="content">
-                                        <h3 class="title"><a href="{{ route('routerURL', ['slug' => $homeProductCategory->countProduct->first()->slug]) }}" title="{{ $homeProductCategory->countProduct->first()->title }}">{{ $homeProductCategory->countProduct->first()->title }}</a></h3>
+                                        <h3 class="title"><a href="" title="">PHẦN MỀM QUẢN LÝ THU HỌC PHÍ</a></h3>
                                         <div class="description">
-                                            {!! $homeProductCategory->countProduct->first()->description !!}
+                                            <p>
+                                                A-ANA 7.0 là công cụ hỗ trợ đắc lực cho các đơn vị Hành chính sự nghiệp thực hiện các công việc hạch toán kế toán. 
+                                                Phù hợp cho các đơn vị Hành chính sự nghiệp và Hành chính sự nghiệp có thu. A-ANA 7.0 sử dụng giao diện hoàn toàn bằng tiếng Việt, 
+                                                giúp cho người sử dụng dễ học, dễ nhớ, dễ sử dụng. 
+                                                Chỉ sau vài tiếng đồng hồ thao tác, người sử dụng đã có thể nắm vững và khai thác có hiệu quả phần mềm trong vào công việc của mình.
+                                            </p>
                                         </div>
-                                        <a class="readmore btn btn-3 hover-border-1" href="{{ route('routerURL', ['slug' => $homeProductCategory->countProduct->first()->slug]) }}">
+                                        <a class="readmore btn btn-3 hover-border-1" href="">
                                             <span>
                                                 Xem thêm <i class="fas fa-angle-double-right"></i>
                                             </span>

@@ -1,6 +1,7 @@
 <?php
 $menu_footer = getMenus('menu-footer');
 $gallery = getSlide('slide-footer', 'gallery');
+$partner = getSlide('home-adv', 'gallery');
 // dd($gallery);
 ?>
 
@@ -131,6 +132,19 @@ $gallery = getSlide('slide-footer', 'gallery');
 </footer>
 <!--Site Footer Four End-->
 
+@if( $partner && $partner->slides )
+<div class="footer-v2-marquee marquee-wrapper">
+    <div class="marquee">
+        <marquee behavior="" direction="" loop="1">
+            @foreach( $partner->slides as $v )
+            <a href="">
+                <img src="{{ $v->src }}" alt="{{ $v->title }}">
+            </a> 
+            @endforeach
+        </marquee>
+    </div>
+</div>
+@endif
 
 <footer class="site-footer">
     <div class="site-footer-bg" style="background-image: url({{ asset('frontend/images/site-footer-bg.png') }});">

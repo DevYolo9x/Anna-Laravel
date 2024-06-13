@@ -14,3 +14,7 @@ yarn-error.log
 .history
 /upload
 /public
+Sources/
+laravel_anna.sql
+composer.lock
+!public/frontend/css/insur.css

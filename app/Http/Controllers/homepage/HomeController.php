@@ -9,7 +9,7 @@ use Illuminate\Http\Response;
 use Illuminate\Support\Facades\DB;
 use App\Components\Comment;
 use App\Components\System;
-use Cache;
+use Illuminate\Support\Facades\Cache;
 use Carbon\Carbon;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Auth;
@@ -34,97 +34,45 @@ class HomeController extends Controller
     public function index()
     {
         $fcSystem = $this->system->fcSystem();
-        $slideHome = getSlide('slide-home-main', 'slideHome');
-        $slideAdv = getSlide('home-adv', 'slideAdv');
-        //dd($slideHome);
+        $slideHome = getSlide('slide-home-main');
+        $slideAdv = getSlide('home-adv');
 
-        $home1Product =
-            \App\Models\Product::select('id', 'title', 'slug', 'image', 'price', 'price_sale', 'catalogue_id')
-            ->where(['alanguage' => config('app.locale'), 'publish' => 0, 'home_1' => 1])
-            ->orderBy('order', 'asc')
-            ->with('product_category')
-            ->orderBy('id', 'desc')
-            ->limit(3)
-            ->get();
-
-        $home2Product =
-            \App\Models\Product::select('id', 'title', 'slug', 'image', 'price', 'price_sale', 'catalogue_id')
-            ->where(['alanguage' => config('app.locale'), 'publish' => 0, 'home_2' => 1])
-            ->orderBy('order', 'asc')
-            ->with('product_category')
-            ->orderBy('id', 'desc')
-            ->limit(10)
-            ->get();
-
-        $home1CategoryProduct = \App\Models\CategoryProduct::select('id', 'title', 'slug', 'banner', 'description')
+        $homeProduct = Cache::remember('homeProduct', 600, function () {
+            $homeProduct = \App\Models\Product::select('id', 'title', 'slug', 'image', 'price', 'price_sale', 'description', 'catalogue_id')
             ->where(['alanguage' => config('app.locale'), 'publish' => 0, 'ishome' => 1])
-            ->with(['posts', 'fields'])
             ->orderBy('order', 'asc')
             ->orderBy('id', 'desc')
-            ->limit(1)
-            ->get()
-            ->map(function ($thread) {
-                $thread->setRelation('posts', $thread->posts->take(12));
-                return $thread;
-            });
-            
-        $home2CategoryProduct = \App\Models\CategoryProduct::select('id', 'title', 'slug', 'banner', 'description')
-            ->where(['alanguage' => config('app.locale'), 'publish' => 0, 'home_1' => 1])
-            ->with(['posts', 'fields'])
-            ->orderBy('order', 'asc')
-            ->orderBy('id', 'desc')
-            ->limit(1)
-            ->get()
-            ->map(function ($thread) {
-                $thread->setRelation('posts', $thread->posts->take(12));
-                return $thread;
-            });
-            
-        $home3CategoryProduct = \App\Models\CategoryProduct::select('id', 'title', 'slug', 'banner', 'description')
-            ->where(['alanguage' => config('app.locale'), 'publish' => 0, 'home_2' => 1])
-            ->with(['posts', 'fields'])
-            ->orderBy('order', 'asc')
-            ->orderBy('id', 'desc')
-            ->limit(1)
-            ->get()
-            ->map(function ($thread) {
-                $thread->setRelation('posts', $thread->posts->take(12));
-                return $thread;
-            });
+            ->limit(20)
+            ->get();
+            return $homeProduct;
+        });
 
-        //dd($home1CategoryProduct);
+        $homeProductCategory = Cache::remember('homeProductCategory', 600, function () {
+            $homeProductCategory = \App\Models\CategoryProduct::select('id', 'title', 'slug', 'image', 'banner', 'description')
+                ->where(['alanguage' => config('app.locale'), 'ishome' => 1, 'publish' => 0])
+                ->with([
+                    'countProduct' => function($q) {
+                        $q
+                        ->join('products', 'products.id', '=', 'catalogues_relationships.moduleid')
+                        ->where(['products.publish' => 0])
+                        ->limit(20)
+                        ->orderBy('products.order', 'asc')
+                        ->orderBy('products.id', 'desc');
+                    }])
+                ->first();
+                return $homeProductCategory;
+        });
 
-        $homeNews = \App\Models\CategoryArticle::select('id', 'title', 'slug')
+        $homeNews = Cache::remember('homeNews', 600, function () {
+            $homeNews = \App\Models\CategoryArticle::select('id', 'title', 'slug')
             ->where(['alanguage' => config('app.locale'), 'publish' => 0, 'ishome' => 1])
             ->with(['posts' => function ($query) {
                 $query->limit(20)->get();
             }])
             ->first();
+            return $homeNews;
+        });
 
-            // dd($homeNews);
-
-        /*
-        $homeNews =
-            \App\Models\CategoryArticle::select('id', 'title', 'slug')
-            ->where(['alanguage' => config('app.locale'), 'publish' => 0, 'ishome' => 1])
-            ->with(['posts' => function ($query) {
-                $query->limit(4)->get();
-            }])
-            ->first();
-        $homeServices =
-            \App\Models\CategoryArticle::select('id', 'title', 'slug', 'description')
-            ->where(['alanguage' => config('app.locale'), 'publish' => 0, 'isaside' => 1])
-            ->with(['posts' => function ($query) {
-                $query->limit(4)->get();
-            }])
-            ->first();
-        $homeProduct =
-            \App\Models\Product::select('id', 'title', 'slug', 'image')
-            ->where(['alanguage' => config('app.locale'), 'publish' => 0, 'ishome' => 1])
-            ->orderBy('order', 'asc')
-            ->orderBy('id', 'desc')
-            ->limit(12)
-            ->get(); */
         //page: HOME
         $page = Page::with('fields')->where(['alanguage' => config('app.locale'), 'page' => 'index', 'publish' => 0])->select('id', 'title', 'image', 'meta_title', 'meta_description')->first();
         $fields = [];
@@ -140,7 +88,7 @@ class HomeController extends Controller
         $seo['meta_title'] = !empty($page['meta_title']) ? $page['meta_title'] : $page['title'];
         $seo['meta_description'] = !empty($page['meta_description']) ? $page['meta_description'] : '';
         $seo['meta_image'] = !empty($page['image']) ? url($page['image']) : '';
-        return view('homepage.home.index', compact('page', 'module', 'seo', 'fcSystem', 'slideHome', 'slideAdv', 'homeNews', 'home1CategoryProduct', 'home2CategoryProduct', 'home3CategoryProduct', 'fields'));
+        return view('homepage.home.index', compact('page', 'module', 'seo', 'fcSystem', 'slideHome', 'slideAdv', 'homeNews', 'fields', 'homeProduct', 'homeProductCategory'));
     }
 
     public function sitemap()
