@@ -158,6 +158,58 @@ class ContactController extends Controller
         return response()->json(['error' => $validator->errors()->all()]);
     }
 
+    public function regisProductDemo(Request $request)
+    {
+        if (config('app.locale') == 'vi') {
+            $validator = Validator::make($request->all(), [
+                'company' => 'required',
+                'fullname' => 'required',
+                'email' => 'required|email',
+                'phone' => ['required', new PhoneNumber],
+                'address' => 'required',
+                'message' => 'required',
+                'product' => 'required',
+            ], [
+                'company.required' => 'Trường Công ty là trường bắt buộc.',
+                'fullname.required' => 'Trường Họ và tên là trường bắt buộc.',
+                'email.required' => 'Email là trường bắt buộc.',
+                'email.email' => 'Email không đúng định dạng.',
+                'phone.required' => 'Số điện thoại là trường bắt buộc.',
+                'phone.regex'        => 'Số điện thoại không hợp lệ.',
+                'phone.numeric' => 'Số điện thoại không đúng định dạng.',
+                'address.required' => 'Địa chỉ là trường bắt buộc.',
+                'message.required' => 'Nội dung là trường bắt buộc.',
+                'product.required' => 'Sản phẩm là trường bắt buộc.',
+            ]);
+        } else {
+            $validator = Validator::make($request->all(), [
+                'fullname' => 'required',
+                'email' => 'required|email',
+                'phone' => 'required',
+                'message' => 'required',
+            ]);
+        }
+        if ($validator->passes()) {
+            $id = Contact::insertGetId([
+                'fullname' => $request->fullname,
+                'email' => $request->email,
+                'company' => $request->company,
+                'phone' => $request->phone,
+                'address' => $request->address,
+                'message' => $request->message,
+                'product_name' => $request->product,
+                'type' => 'popup',
+                'created_at' => Carbon::now()
+            ]);
+            if ($id > 0) {
+                return response()->json(['status' => '200']);
+            } else {
+                return response()->json(['status' => '500']);
+            }
+        }
+        return response()->json(['error' => $validator->errors()->all()]);
+    }
+
     public function agency(Request $request)
     {
         $fcSystem = $this->system->fcSystem();

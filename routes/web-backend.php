@@ -358,8 +358,8 @@ Route::group(['middleware' => 'locale'], function () {
             Route::get('/index', [ContactController::class, 'index'])->name('contacts.index')->middleware('can:contacts_index');
             Route::post('/index', [ContactController::class, 'store'])->name('contacts.index_store')->middleware('can:contacts_index');
         });
-        Route::group(['prefix' => '/popup'], function () {
-            Route::get('/popup', [ContactController::class, 'popup'])->name('contacts.popup')->middleware('can:contacts_index');
+        Route::group(['prefix' => '/register-product'], function () {
+            Route::get('/index', [ContactController::class, 'registerProduct'])->name('contacts.registerProduct')->middleware('can:contacts_index');
         });
         Route::group(['prefix' => '/subscribers'], function () {
             Route::get('/index', [ContactController::class, 'subscribers'])->name('subscribers.index');

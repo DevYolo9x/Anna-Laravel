@@ -31,6 +31,7 @@ class ProductController extends Controller
             ->with(['fields', 'brands', 'product_versions', 'deals'])
             ->with(['product_stocks'])
             ->first();
+
         $fields = [];
         if (!empty($detail->fields) && count($detail->fields) > 0) {
             foreach ($detail->fields as $item) {

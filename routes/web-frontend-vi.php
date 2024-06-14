@@ -46,6 +46,7 @@ Route::group(['middleware' => ['locale', 'maintenance']], function () {
     Route::get('/products', [CategoryController::class, 'products']);
     // Route::get('/san-pham', [CategoryController::class, 'products']);
     Route::post('/lien-he', [ContactController::class, 'store'])->name('contactFrontend.store');
+    Route::post('/dang-ky-demo', [ContactController::class, 'regisProductDemo'])->name('contactFrontend.regisProductDemo');
     Route::post('/dang-ky-thong-tin', [ContactController::class, 'popup'])->name('contactFrontend.popup');
     Route::post('/subcribers', [ContactController::class, 'subcribers'])->name('contactFrontend.subcribers');
     Route::post('/dang-ky-dai-ly-form', [ContactController::class, 'agency'])->name('contactFrontend.agency');

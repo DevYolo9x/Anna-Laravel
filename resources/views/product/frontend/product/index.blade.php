@@ -150,22 +150,9 @@ if (!empty($wishlist)) {
                             <i class="fa fa-star"></i>
                             <i class="fa fa-star"></i>
                             <i class="fa fa-star"></i>
-                            <span>2 Customer Reviews</span>
                         </div>
                         <div class="product-details__content">
                             {!! $detail->description !!}
-                        </div>
-
-                        <div class="product-details__social">
-                            <div class="title">
-                                <h3>Share with friends</h3>
-                            </div>
-                            <div class="product-details__social-link">
-                                <a href="#"><span class="fab fa-twitter"></span></a>
-                                <a href="#"><span class="fab fa-facebook"></span></a>
-                                <a href="#"><span class="fab fa-pinterest-p"></span></a>
-                                <a href="#"><span class="fab fa-instagram"></span></a>
-                            </div>
                         </div>
                     </div>
                 </div>
@@ -177,166 +164,70 @@ if (!empty($wishlist)) {
                 <div class="row">
                     <div class="col-xl-12">
                         <ul class="portfolio-filter style1 post-filter has-dynamic-filters-counter list-unstyled">
-                            <li data-filter=".filter-item" class=""><span class="filter-text">All<span class="count">(9)</span></span></li>
-                            <li data-filter=".stra" class="active"><span class="filter-text">Strategy<span class="count">(6)</span></span></li>
-                            <li data-filter=".busi" class=""><span class="filter-text">Business<span class="count">(7)</span></span></li>
-                            <li data-filter=".insur" class=""><span class="filter-text">Insurance<span class="count">(2)</span></span></li>
-                            <li data-filter=".poli" class=""><span class="filter-text last-pd-none">Policies<span class="count">(5)</span></span></li>
+                            <li data-filter=".filter-item" class="active"><span class="filter-text">Đăng ký dùng thử</span></li>
+                            <li data-filter=".stra" class=""><span class="filter-text">Tính năng</span></li>
+                            <li data-filter=".busi" class=""><span class="filter-text">Đặc điểm nổi bật</span></li>
                         </ul>
                     </div>
                 </div>
                 <div class="row filter-layout masonary-layout" style="position: relative; height: 880px;">
                     <!--Portfolio Single Start-->
-                    <div class="col-xl-4 col-lg-6 col-md-6 filter-item stra busi" style="position: absolute; left: 0px; top: 0px;">
-                        <div class="portfolio__single">
-                            <div class="portfolio__img">
-                                <img src="assets/images/project/portfolio-1-1.jpg" alt="">
-                                <div class="portfolio__plus">
-                                    <a href="assets/images/project/portfolio-1-1.jpg" class="img-popup"><span class="icon-plus"></span></a>
+                    <div class="col-xl-12 col-lg-12 col-md-12 filter-item" style="position: absolute; left: 0px; top: 0px;">
+                        <form class="get-insurance__form" id="productRegisDemo">
+                            @csrf
+                            @include('homepage.common.alert')
+                            <div class="get-insurance__content-box">
+                                <div class="row">
+                                    <div class="col-lg-6">
+                                        <div class="get-insurance__input-box">
+                                            <input type="text" placeholder="Tên công ty *" name="company">
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="get-insurance__input-box">
+                                            <input type="text" placeholder="Họ và Tên *" name="fullname">
+                                        </div>
+                                    </div>
                                 </div>
-                                <div class="portfolio__content">
-                                    <p class="portfolio__sub-title">Strategy</p>
-                                    <h4 class="portfolio__title"><a href="portfolio-details.html">Insurance policy</a>
-                                    </h4>
+                                
+                                <div class="row">
+                                    <div class="col-lg-6">
+                                        <div class="get-insurance__input-box">
+                                            <input type="text" placeholder="Điện thoại *" name="phone">
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="get-insurance__input-box">
+                                        <input type="email" placeholder="Email *" name="email">
+                                    </div>
+                                    </div>
                                 </div>
+                                
+                                <div class="get-insurance__input-box">
+                                    <input type="text" placeholder="Địa chỉ *" name="address">
+                                </div>
+                                <div class="get-insurance__input-box">
+                                    <textarea name="message" placeholder="Nội dung *"></textarea>
+                                </div>
+
+                                <input type="hidden" name="product_name" value="{{ $detail->title }}" />
                             </div>
-                        </div>
+                            <div class="text-center">
+                            <button type="submit" class="thm-btn get-insurance__btn btn-regis-demo">Đăng ký</button>
+                            </div>
+                        </form>
                     </div>
                     <!--Portfolio Single End-->
+                    
                     <!--Portfolio Single Start-->
-                    <div class="col-xl-4 col-lg-6 col-md-6 filter-item stra busi insur" style="position: absolute; left: 400px; top: 0px;">
-                        <div class="portfolio__single">
-                            <div class="portfolio__img">
-                                <img src="assets/images/project/portfolio-1-2.jpg" alt="">
-                                <div class="portfolio__plus">
-                                    <a href="assets/images/project/portfolio-1-2.jpg" class="img-popup"><span class="icon-plus"></span></a>
-                                </div>
-                                <div class="portfolio__content">
-                                    <p class="portfolio__sub-title">Strategy</p>
-                                    <h4 class="portfolio__title"><a href="portfolio-details.html">Insurance policy</a>
-                                    </h4>
-                                </div>
-                            </div>
-                        </div>
+                    <div class="col-xl-12 col-lg-12 col-md-12 stra" style="position: absolute; left: 0px; top: 0px;">
+                        <div>{!! $detail->content !!}</div>
                     </div>
                     <!--Portfolio Single End-->
+
                     <!--Portfolio Single Start-->
-                    <div class="col-xl-4 col-lg-6 col-md-6 filter-item stra busi poli" style="position: absolute; left: 800px; top: 0px;">
-                        <div class="portfolio__single">
-                            <div class="portfolio__img">
-                                <img src="assets/images/project/portfolio-1-3.jpg" alt="">
-                                <div class="portfolio__plus">
-                                    <a href="assets/images/project/portfolio-1-3.jpg" class="img-popup"><span class="icon-plus"></span></a>
-                                </div>
-                                <div class="portfolio__content">
-                                    <p class="portfolio__sub-title">Strategy</p>
-                                    <h4 class="portfolio__title"><a href="portfolio-details.html">Insurance policy</a>
-                                    </h4>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <!--Portfolio Single End-->
-                    <!--Portfolio Single Start-->
-                    <div class="col-xl-4 col-lg-6 col-md-6 filter-item poli busi" style="position: absolute; left: 400px; top: 0px; display: none;">
-                        <div class="portfolio__single">
-                            <div class="portfolio__img">
-                                <img src="assets/images/project/portfolio-1-4.jpg" alt="">
-                                <div class="portfolio__plus">
-                                    <a href="assets/images/project/portfolio-1-4.jpg" class="img-popup"><span class="icon-plus"></span></a>
-                                </div>
-                                <div class="portfolio__content">
-                                    <p class="portfolio__sub-title">Strategy</p>
-                                    <h4 class="portfolio__title"><a href="portfolio-details.html">Insurance policy</a>
-                                    </h4>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <!--Portfolio Single End-->
-                    <!--Portfolio Single Start-->
-                    <div class="col-xl-4 col-lg-6 col-md-6 filter-item stra poli" style="position: absolute; left: 0px; top: 440px;">
-                        <div class="portfolio__single">
-                            <div class="portfolio__img">
-                                <img src="assets/images/project/portfolio-1-5.jpg" alt="">
-                                <div class="portfolio__plus">
-                                    <a href="assets/images/project/portfolio-1-5.jpg" class="img-popup"><span class="icon-plus"></span></a>
-                                </div>
-                                <div class="portfolio__content">
-                                    <p class="portfolio__sub-title">Strategy</p>
-                                    <h4 class="portfolio__title"><a href="portfolio-details.html">Insurance policy</a>
-                                    </h4>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <!--Portfolio Single End-->
-                    <!--Portfolio Single Start-->
-                    <div class="col-xl-4 col-lg-6 col-md-6 filter-item insur busi" style="position: absolute; left: 400px; top: 0px; display: none;">
-                        <div class="portfolio__single">
-                            <div class="portfolio__img">
-                                <img src="assets/images/project/portfolio-1-6.jpg" alt="">
-                                <div class="portfolio__plus">
-                                    <a href="assets/images/project/portfolio-1-6.jpg" class="img-popup"><span class="icon-plus"></span></a>
-                                </div>
-                                <div class="portfolio__content">
-                                    <p class="portfolio__sub-title">Strategy</p>
-                                    <h4 class="portfolio__title"><a href="portfolio-details.html">Insurance policy</a>
-                                    </h4>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <!--Portfolio Single End-->
-                    <!--Portfolio Single Start-->
-                    <div class="col-xl-4 col-lg-6 col-md-6 filter-item stra busi" style="position: absolute; left: 400px; top: 440px;">
-                        <div class="portfolio__single">
-                            <div class="portfolio__img">
-                                <img src="assets/images/project/portfolio-1-7.jpg" alt="">
-                                <div class="portfolio__plus">
-                                    <a href="assets/images/project/portfolio-1-7.jpg" class="img-popup"><span class="icon-plus"></span></a>
-                                </div>
-                                <div class="portfolio__content">
-                                    <p class="portfolio__sub-title">Strategy</p>
-                                    <h4 class="portfolio__title"><a href="portfolio-details.html">Insurance policy</a>
-                                    </h4>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <!--Portfolio Single End-->
-                    <!--Portfolio Single Start-->
-                    <div class="col-xl-4 col-lg-6 col-md-6 filter-item stra poli" style="position: absolute; left: 800px; top: 440px;">
-                        <div class="portfolio__single">
-                            <div class="portfolio__img">
-                                <img src="assets/images/project/portfolio-1-8.jpg" alt="">
-                                <div class="portfolio__plus">
-                                    <a href="assets/images/project/portfolio-1-8.jpg" class="img-popup"><span class="icon-plus"></span></a>
-                                </div>
-                                <div class="portfolio__content">
-                                    <p class="portfolio__sub-title">Strategy</p>
-                                    <h4 class="portfolio__title"><a href="portfolio-details.html">Insurance policy</a>
-                                    </h4>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <!--Portfolio Single End-->
-                    <!--Portfolio Single Start-->
-                    <div class="col-xl-4 col-lg-6 col-md-6 filter-item poli busi" style="position: absolute; left: 400px; top: 440px; display: none;">
-                        <div class="portfolio__single">
-                            <div class="portfolio__img">
-                                <img src="assets/images/project/portfolio-1-9.jpg" alt="">
-                                <div class="portfolio__plus">
-                                    <a href="assets/images/project/portfolio-1-9.jpg" class="img-popup"><span class="icon-plus"></span></a>
-                                </div>
-                                <div class="portfolio__content">
-                                    <p class="portfolio__sub-title">Strategy</p>
-                                    <h4 class="portfolio__title"><a href="portfolio-details.html">Insurance policy</a>
-                                    </h4>
-                                </div>
-                            </div>
-                        </div>
+                    <div class="col-xl-12 col-lg-12 col-md-12 busi" style="position: absolute; left: 0px; top: 0px;">
+                        <div>{!! showField($detail->fields, 'config_colums_editor_product_noibat') !!}</div>
                     </div>
                     <!--Portfolio Single End-->
                 </div>
@@ -345,7 +236,49 @@ if (!empty($wishlist)) {
 @endsection
 
 @push('javascript')
-
+<script type="text/javascript">
+    $(document).ready(function () {
+        $(".btn-regis-demo").click(function (e) {
+            e.preventDefault();
+            var _token = $("#productRegisDemo input[name='_token']").val();
+            var company = $("#productRegisDemo input[name='company']").val();
+            var fullname = $("#productRegisDemo input[name='fullname']").val();
+            var email = $("#productRegisDemo input[name='email']").val();
+            var phone = $("#productRegisDemo input[name='phone']").val();
+            var address = $("#productRegisDemo input[name='address']").val();
+            var message = $("#productRegisDemo textarea[name='message']").val();
+            var product = $("#productRegisDemo input[name='product_name']").val();
+            $.ajax({
+                url: "<?php echo route('contactFrontend.regisProductDemo') ?>",
+                type: 'POST',
+                data: {
+                    _token: _token,
+                    company: company,
+                    fullname: fullname,
+                    email: email,
+                    phone: phone,
+                    address: address,
+                    product: product,
+                    message: message
+                },
+                success: function (data) {
+                    if (data.status == 200) {
+                        $("#productRegisDemo .print-error-msg").css('display', 'none');
+                        $("#productRegisDemo .print-success-msg").css('display', 'block');
+                        $("#productRegisDemo .print-success-msg span").html("<?php echo $fcSystem['message_2'] ?>");
+                        setTimeout(function () {
+                            //location.reload();
+                        }, 3000);
+                    } else {
+                        $("#productRegisDemo .print-error-msg").css('display', 'block');
+                        $("#productRegisDemo .print-success-msg").css('display', 'none');
+                        $("#productRegisDemo .print-error-msg span").html(data.error);
+                    }
+                }
+            });
+        });
+    });
+</script>
 @endpush
 
 @push('css')

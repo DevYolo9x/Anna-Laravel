@@ -17,7 +17,7 @@
 
     <div class="content">
         <h1 class=" text-lg font-medium mt-10">
-            Danh sách đăng ký
+            Danh sách đăng ký dùng thử
         </h1>
 
         <div class="grid grid-cols-12 gap-6 mt-5">
@@ -34,8 +34,10 @@
                             <input type="checkbox" id="checkbox-all">
                         </th>
                         <th class="whitespace-nowrap">STT</th>
-                        <th class="whitespace-nowrap">Thông tin</th>
-                        <th class="whitespace-nowrap">Công ty & Mã số thuế</th>
+                        <th class="whitespace-nowrap">Họ và tên & Email & Địa chỉ</th>
+                        <th class="whitespace-nowrap">Số điện thoại</th>
+                        <th class="whitespace-nowrap">Sản phẩm</th>
+                        <th class="whitespace-nowrap">Nội dung</th>
                         <th class="whitespace-nowrap">Ngày gửi</th>
                     </tr>
                     </thead>
@@ -50,14 +52,12 @@
                             </td>
                             <td>
                                 <p><?php echo $v->fullname; ?></p>
-                                <p><?php echo $v->phone; ?></p>
-                                <p><?php echo $v->address; ?></p>
                                 <p><?php echo $v->email; ?></p>
+                                <p><?php echo $v->address; ?></p>
                             </td>
-                            <td>
-                                {!! (!empty($v->company)?$v->company .'<br>':'') !!}
-                                {{ !empty($v->tax_code)?$v->tax_code:'' }}
-                            </td>
+                            <td><p><?php echo $v->phone; ?></p></td>
+                            <td><p><?php echo $v->product_name; ?></p></td>
+                            <td><p><?php echo $v->message; ?></p></td>
                             <td>
                                 {{$v->created_at}}
                             </td>

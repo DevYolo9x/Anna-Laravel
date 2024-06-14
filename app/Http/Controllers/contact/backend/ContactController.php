@@ -46,13 +46,14 @@ class ContactController extends Controller
         return view('contact.backend.index', compact('module', 'data', 'countContact', 'countEmail', 'temp_email'));
     }
 
-    public function popup(Request $request)
+    public function registerProduct(Request $request)
     {
         $data = Contact::where('type', 'popup')->orderBy('id', 'DESC');
         if (is($request->keyword)) {
             $data =  $data->where(function ($query) use ($request) {
                 $query->where('email', 'like', '%' . $request->keyword . '%')
                     ->orWhere('fullname', 'like', '%' . $request->keyword . '%')
+                    ->orWhere('product_name', 'like', '%' . $request->keyword . '%')
                     ->orWhere('phone', 'like', '%' . $request->keyword . '%');
             });
         }

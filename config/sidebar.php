@@ -298,14 +298,14 @@ return [
                 'dropdown' => true,
                 'active' => true
             ],
-            // 'subscribers' => [
-            //     'title' => 'Đăng ký gửi email',
-            //     'can' => 'contacts_index',
-            //     'route' => 'subscribers.index',
-            //     'menu' => ['subscribers'],
-            //     'dropdown' => false,
-            //     'active' => true
-            // ],
+            'register-product' => [
+                'title' => 'Đăng ký dùng thử',
+                'can' => 'contacts_index',
+                'route' => 'contacts.registerProduct',
+                'menu' => ['register-product'],
+                'dropdown' => false,
+                'active' => true
+            ],
             // 'books' => [
             //     'title' => 'Đăng kí đại lý',
             //     'can' => 'contacts_index',
